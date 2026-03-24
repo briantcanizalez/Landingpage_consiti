@@ -73,7 +73,7 @@ app.get('/', (c) => {
           <nav class="nav-links" id="navLinks">
             <a href="#servicios">Servicios</a>
             <a href="#ecosistema">Ecosistema</a>
-            <a href="#casos">Casos de Exito</a>
+            <a href="#casos">Casos de Éxito</a>
             <a href="#nosotros">Nosotros</a>
             <a href="#faq">FAQ</a>
           </nav>
@@ -91,25 +91,25 @@ app.get('/', (c) => {
       <section class="hero">
         <div class="wrap hero-inner">
           <div class="hero-content">
-            <div class="hero-badge"><span class="badge-dot"></span>Socio estrategico &middot; +12 anos en El Salvador y LATAM</div>
-            <h1 class="hero-h1">Somos la compania de<br/><span class="hero-accent">Transformacion Digital</span><br/>mas comprometida de El Salvador</h1>
-            <p class="hero-sub">En Grupo Consiti impulsamos la innovacion y entregamos soluciones de Software, IA y Cloud que ayudan a las organizaciones a escalar y alcanzar sus objetivos.</p>
+            <div class="hero-badge"><span class="badge-dot"></span>Socio estratégico &middot; +12 años en El Salvador y LATAM</div>
+            <h1 class="hero-h1">Somos la compañía de<br/><span class="hero-accent">Transformación Digital</span><br/>más comprometida de El Salvador</h1>
+            <p class="hero-sub">En Grupo Consiti impulsamos la innovación y entregamos soluciones de Software, IA y Cloud que ayudan a las organizaciones a escalar y alcanzar sus objetivos.</p>
             <div class="hero-checks">
-              {['Soluciones tecnologicas de vanguardia a su medida','Equipo experto certificado en Software, IA y Cloud','Confianza de organizaciones en toda Latinoamerica'].map((t,i)=>(
+              {['Soluciones tecnológicas de vanguardia a su medida','Equipo experto certificado en Software, IA y Cloud','Confianza de organizaciones en toda Latinoamérica'].map((t,i)=>(
                 <div class="hcheck" key={i}><span class="hcheck-icon" dangerouslySetInnerHTML={{__html: I.check}}/>{t}</div>
               ))}
             </div>
             <div class="hero-ctas">
               <a href="https://wa.me/50372559059" target="_blank" rel="noopener" class="btn-primary">Solicitar Demo <span class="btn-arr">&rarr;</span></a>
-              <a href="#casos" class="btn-outline">Ver casos de exito</a>
+              <a href="#casos" class="btn-outline">Ver casos de éxito</a>
             </div>
           </div>
           <div class="hero-counters">
             {[
               {icon:I.rocket, target:200, plus:true, label:'Proyectos entregados'},
               {icon:I.users,  target:120, plus:true, label:'Clientes satisfechos'},
-              {icon:I.calendar,target:12, plus:true, label:'Anos en la industria'},
-              {icon:I.globe,  target:8,   plus:false,label:'Paises en LATAM'},
+              {icon:I.calendar,target:12, plus:true, label:'Años en la industria'},
+              {icon:I.globe,  target:8,   plus:false,label:'Países en LATAM'},
             ].map((s,i)=>(
               <div class="hcounter" key={i}>
                 <div class="hc-icon" dangerouslySetInnerHTML={{__html: s.icon}}/>
@@ -159,10 +159,10 @@ app.get('/', (c) => {
         <div class="wrap grid-2col">
           <div class="reveal">
             <div class="chip">Sobre nosotros</div>
-            <h2 class="sec-h2">Somos la empresa de soluciones IT <span class="hero-accent">mas comprometida con sus resultados</span></h2>
-            <p class="sec-p mb24">En Grupo Consiti impulsamos la innovacion y entregamos soluciones de impacto que ayudan a las organizaciones a escalar. Nuestro compromiso con la excelencia y la tecnologia de punta garantiza que su proyecto este en las mejores manos.</p>
+            <h2 class="sec-h2">Somos la empresa de soluciones IT <span class="hero-accent">más comprometida con sus resultados</span></h2>
+            <p class="sec-p mb24">En Grupo Consiti impulsamos la innovación y entregamos soluciones de impacto que ayudan a las organizaciones a escalar. Nuestro compromiso con la excelencia y la tecnología de punta garantiza que su proyecto esté en las mejores manos.</p>
             <div class="about-checks">
-              {['Soluciones tecnologicas de vanguardia adaptadas a sus necesidades','Un equipo de desarrolladores e ingenieros expertos en toda LATAM','Con la confianza de empresas multinacionales en todo el mundo'].map((t,i)=>(
+              {['Soluciones tecnológicas de vanguardia adaptadas a sus necesidades','Un equipo de desarrolladores e ingenieros expertos en toda LATAM','Con la confianza de empresas multinacionales en todo el mundo'].map((t,i)=>(
                 <div class="acheck" key={i}><span class="acheck-icon" dangerouslySetInnerHTML={{__html: I.check}}/><span>{t}</span></div>
               ))}
             </div>
@@ -171,7 +171,7 @@ app.get('/', (c) => {
             <div class="about-card">
               <div class="ac-head"><img src="/static/icon-dark.png" alt="Grupo Consiti" class="ac-iso" /></div>
               <div class="ac-stats">
-                {[{v:'+200',l:'Proyectos'},{v:'+120',l:'Clientes'},{v:'+12',l:'Anos'},{v:'8',l:'Paises'}].map((s,i)=>(
+                {[{v:'+200',l:'Proyectos'},{v:'+120',l:'Clientes'},{v:'+12',l:'Años'},{v:'8',l:'Países'}].map((s,i)=>(
                   <div class="ac-stat" key={i}><div class="ac-val">{s.v}</div><div class="ac-lbl">{s.l}</div></div>
                 ))}
               </div>
@@ -183,7 +183,7 @@ app.get('/', (c) => {
             </div>
             <div class="about-mini-card">
               <span class="amc-icon" dangerouslySetInnerHTML={{__html: I.globe}}/>
-              <span>Sede principal en <strong>El Salvador</strong> con presencia en <strong>Guatemala, Honduras, Costa Rica, Panama</strong> y mas paises de LATAM.</span>
+              <span>Sede principal en <strong>El Salvador</strong> con presencia en <strong>Guatemala, Honduras, Costa Rica, Panamá</strong> y más países de LATAM.</span>
             </div>
           </div>
         </div>
@@ -198,12 +198,12 @@ app.get('/', (c) => {
           </div>
           <div class="svc-grid">
             {[
-              {icon:I.code,  title:'Desarrollo de Software',desc:'Soluciones a medida que automatizan procesos criticos, integran sistemas y aceleran la operacion con tecnologia moderna.'},
-              {icon:I.brain, title:'Inteligencia Artificial',desc:'Modelos de IA aplicados a procesos reales: procesamiento de documentos, atencion al cliente, prediccion de demanda.'},
-              {icon:I.cloud, title:'Cloud & Infraestructura',desc:'Migracion, arquitectura y gestion de entornos cloud con Google Cloud y Oracle. Disponibilidad y seguridad garantizadas.'},
-              {icon:I.box,   title:'Implementacion ERP/CRM',desc:'Despliegue y personalizacion de Odoo y Salesforce adaptados a los procesos de cada organizacion.'},
-              {icon:I.link,  title:'Integracion de Sistemas',desc:'Conectamos plataformas heterogeneas mediante APIs y middleware, eliminando silos de informacion.'},
-              {icon:I.chart, title:'Analitica & Business Intelligence',desc:'Dashboards ejecutivos, KPIs en tiempo real y modelos predictivos para decisiones estrategicas.'},
+              {icon:I.code,  title:'Desarrollo de Software',desc:'Soluciones a medida que automatizan procesos críticos, integran sistemas y aceleran la operación con tecnología moderna.'},
+              {icon:I.brain, title:'Inteligencia Artificial',desc:'Modelos de IA aplicados a procesos reales: procesamiento de documentos, atención al cliente, predicción de demanda.'},
+              {icon:I.cloud, title:'Cloud & Infraestructura',desc:'Migración, arquitectura y gestión de entornos cloud con Google Cloud y Oracle. Disponibilidad y seguridad garantizadas.'},
+              {icon:I.box,   title:'Implementación ERP/CRM',desc:'Despliegue y personalización de Odoo y Salesforce adaptados a los procesos de cada organización.'},
+              {icon:I.link,  title:'Integración de Sistemas',desc:'Conectamos plataformas heterogéneas mediante APIs y middleware, eliminando silos de información.'},
+              {icon:I.chart, title:'Analítica & Business Intelligence',desc:'Dashboards ejecutivos, KPIs en tiempo real y modelos predictivos para decisiones estratégicas.'},
             ].map((s,i)=>(
               <div class="svc-card reveal" key={i}>
                 <div class="svc-icon" dangerouslySetInnerHTML={{__html: s.icon}}/>
@@ -221,14 +221,14 @@ app.get('/', (c) => {
         <div class="wrap">
           <div class="sec-center reveal">
             <div class="chip">Alianzas</div>
-            <h2 class="sec-h2">Representamos a las marcas<br/>tecnologicas <span class="hero-accent">lideres globales</span></h2>
+            <h2 class="sec-h2">Representamos a las marcas<br/>tecnológicas <span class="hero-accent">líderes globales</span></h2>
           </div>
           <div class="eco-grid">
             {[
               {name:'Google Cloud',cat:'Partner Premier',count:'+50 clientes',desc:'Infraestructura cloud, BigQuery, Vertex AI y Google Workspace.',icon:I.googleCloud,color:'#4285f4'},
               {name:'Oracle',cat:'Gold Partner',count:'+30 clientes',desc:'Oracle ERP Cloud, Oracle Database y OCI Infrastructure.',icon:I.oracle,color:'#C74634'},
-              {name:'Odoo',cat:'Certified Partner',count:'+1,000 clientes',desc:'ERP modular con Odoo Factura IA, facturacion electronica y +80 modulos para manufactura, retail, servicios y gobierno.',icon:I.odoo,color:'#714B67'},
-              {name:'Salesforce',cat:'Consulting Partner',count:'+20 clientes',desc:'CRM, Service Cloud, Marketing Cloud y automatizacion de ventas.',icon:I.salesforce,color:'#00a1e0'},
+              {name:'Odoo',cat:'Certified Partner',count:'+1,000 clientes',desc:'ERP modular con Odoo Factura IA, facturación electrónica y +80 módulos para manufactura, retail, servicios y gobierno.',icon:I.odoo,color:'#714B67'},
+              {name:'Salesforce',cat:'Consulting Partner',count:'+20 clientes',desc:'CRM, Service Cloud, Marketing Cloud y automatización de ventas.',icon:I.salesforce,color:'#00a1e0'},
             ].map((p,i)=>(
               <div class="eco-card reveal" key={i}>
                 <div class="eco-icon" dangerouslySetInnerHTML={{__html:p.icon}} />
@@ -247,36 +247,36 @@ app.get('/', (c) => {
       <section class="section" id="casos">
         <div class="wrap">
           <div class="sec-center reveal">
-            <div class="chip chip-dark">Casos de exito</div>
+            <div class="chip chip-dark">Casos de éxito</div>
             <h2 class="sec-h2">Nuestros <span class="hero-accent">proyectos destacados</span></h2>
           </div>
           <div class="cases-grid">
             {[
               {
-                sector:'Facturacion Electronica',tag:'Odoo Factura IA',
-                title:'Odoo Factura IA - Facturacion electronica en El Salvador',
+                sector:'Facturación Electrónica',tag:'Odoo Factura IA',
+                title:'Odoo Factura IA - Facturación electrónica en El Salvador',
                 desc:'Plataforma integral que conecta empresas con el Ministerio de Hacienda sobre arquitectura escalable en Google Cloud. +1,000 clientes activos y escalando hacia +3,000 PYMEs.',
-                results:[{val:'+1,000',lbl:'Clientes activos'},{val:'+3,000',lbl:'PYMEs en expansion'},{val:'100%',lbl:'Cumplimiento fiscal'}],
+                results:[{val:'+1,000',lbl:'Clientes activos'},{val:'+3,000',lbl:'PYMEs en expansión'},{val:'100%',lbl:'Cumplimiento fiscal'}],
                 tech:[{name:'Odoo',svg:I.odoo},{name:'Google Cloud',svg:I.googleCloud},{name:'Python',svg:I.python},{name:'PostgreSQL',svg:I.postgresql}],
               },
               {
                 sector:'Industria Manufacturera',tag:'IA - Computer Vision',
-                title:'Plataforma de trazabilidad con vision artificial',
-                desc:'Vision artificial para control de calidad en linea de produccion con alertas en tiempo real y reportes analiticos para gerencia.',
-                results:[{val:'70%',lbl:'Reduccion defectos'},{val:'+40%',lbl:'Productividad de linea'},{val:'6ms',lbl:'Deteccion de fallas'}],
+                title:'Plataforma de trazabilidad con visión artificial',
+                desc:'Visión artificial para control de calidad en línea de producción con alertas en tiempo real y reportes analíticos para gerencia.',
+                results:[{val:'70%',lbl:'Reducción defectos'},{val:'+40%',lbl:'Productividad de línea'},{val:'6ms',lbl:'Detección de fallas'}],
                 tech:[{name:'Google Cloud',svg:I.googleCloud},{name:'TensorFlow',svg:I.tensorflow},{name:'Python',svg:I.python},{name:'BigQuery',svg:I.bigquery}],
               },
               {
-                sector:'Sector Retail',tag:'CRM - Automatizacion',
-                title:'CRM y automatizacion de ventas para retail',
-                desc:'Salesforce con automatizacion de ventas, integracion WhatsApp Business y dashboards para cadena con 15 puntos de venta.',
-                results:[{val:'+35%',lbl:'Conversion de ventas'},{val:'2x',lbl:'Velocidad comercial'},{val:'100%',lbl:'Visibilidad pipeline'}],
+                sector:'Sector Retail',tag:'CRM - Automatización',
+                title:'CRM y automatización de ventas para retail',
+                desc:'Salesforce con automatización de ventas, integración WhatsApp Business y dashboards para cadena con 15 puntos de venta.',
+                results:[{val:'+35%',lbl:'Conversión de ventas'},{val:'2x',lbl:'Velocidad comercial'},{val:'100%',lbl:'Visibilidad pipeline'}],
                 tech:[{name:'Salesforce',svg:I.salesforce},{name:'WhatsApp',svg:I.whatsapp},{name:'Looker',svg:I.looker}],
               },
               {
                 sector:'Sector Financiero',tag:'Cloud - Seguridad',
-                title:'Migracion cloud y modernizacion bancaria',
-                desc:'Migracion completa on-premise a Google Cloud para entidad financiera, reduciendo costos y aumentando disponibilidad.',
+                title:'Migración cloud y modernización bancaria',
+                desc:'Migración completa on-premise a Google Cloud para entidad financiera, reduciendo costos y aumentando disponibilidad.',
                 results:[{val:'99.9%',lbl:'Disponibilidad'},{val:'-45%',lbl:'Costos infraestructura'},{val:'10x',lbl:'Velocidad despliegue'}],
                 tech:[{name:'Google Cloud',svg:I.googleCloud},{name:'Kubernetes',svg:I.kubernetes},{name:'Terraform',svg:I.terraform},{name:'Cloud Security',svg:I.cloudsec}],
               },
@@ -306,16 +306,16 @@ app.get('/', (c) => {
       <section class="section sec-alt">
         <div class="wrap">
           <div class="sec-center reveal">
-            <div class="chip">Metodologia</div>
+            <div class="chip">Metodología</div>
             <h2 class="sec-h2">Un proceso probado para<br/><span class="hero-accent">resultados sostenibles</span></h2>
           </div>
           <div class="method-grid">
             {[
-              {n:'01',icon:I.search, t:'Diagnostico',d:'Entendemos a fondo los procesos, sistemas existentes y objetivos del negocio.'},
-              {n:'02',icon:I.pen,    t:'Diseno de solucion',d:'Definimos arquitectura tecnologica, roadmap y KPIs de exito alineados a la estrategia.'},
-              {n:'03',icon:I.layers, t:'Implementacion agil',d:'Desarrollamos en sprints cortos con entregas parciales para validar en tiempo real.'},
-              {n:'04',icon:I.book,   t:'Capacitacion',d:'Formamos equipos para garantizar adopcion correcta y el impacto esperado.'},
-              {n:'05',icon:I.headset,t:'Soporte continuo',d:'Acompanamos a largo plazo con soporte, evolucion y optimizacion continua.'},
+              {n:'01',icon:I.search, t:'Diagnóstico',d:'Entendemos a fondo los procesos, sistemas existentes y objetivos del negocio.'},
+              {n:'02',icon:I.pen,    t:'Diseño de solución',d:'Definimos arquitectura tecnológica, roadmap y KPIs de éxito alineados a la estrategia.'},
+              {n:'03',icon:I.layers, t:'Implementación ágil',d:'Desarrollamos en sprints cortos con entregas parciales para validar en tiempo real.'},
+              {n:'04',icon:I.book,   t:'Capacitación',d:'Formamos equipos para garantizar adopción correcta y el impacto esperado.'},
+              {n:'05',icon:I.headset,t:'Soporte continuo',d:'Acompañamos a largo plazo con soporte, evolución y optimización continua.'},
             ].map((s,i)=>(
               <div class="meth-card reveal" key={i}>
                 <div class="meth-icon" dangerouslySetInnerHTML={{__html:s.icon}}/>
@@ -337,9 +337,9 @@ app.get('/', (c) => {
           </div>
           <div class="testi-grid">
             {[
-              {q:'Grupo Consiti transformo completamente nuestra operacion de recaudo. Lo que antes tomaba dias, ahora se hace en horas con cero errores.',name:'Carlos Mendoza',role:'Secretario de Hacienda - Municipio de Bucaramanga',av:'CM'},
-              {q:'La implementacion de IA en nuestra linea de produccion supero todas las expectativas. Redujimos defectos en un 70% con visibilidad total.',name:'Laura Rios',role:'Directora de Operaciones - Industrias LATAM S.A.',av:'LR'},
-              {q:'Con Salesforce implementado por Consiti, nuestro equipo de ventas duplico su productividad. El acompanamiento post-implementacion fue clave.',name:'Andres Martinez',role:'Gerente Comercial - Cadena Retail Nacional',av:'AM'},
+              {q:'Grupo Consiti transformó completamente nuestra operación de recaudo. Lo que antes tomaba días, ahora se hace en horas con cero errores.',name:'Carlos Mendoza',role:'Secretario de Hacienda - Municipio de Bucaramanga',av:'CM'},
+              {q:'La implementación de IA en nuestra línea de producción superó todas las expectativas. Redujimos defectos en un 70% con visibilidad total.',name:'Laura Ríos',role:'Directora de Operaciones - Industrias LATAM S.A.',av:'LR'},
+              {q:'Con Salesforce implementado por Consiti, nuestro equipo de ventas duplicó su productividad. El acompañamiento post-implementación fue clave.',name:'Andrés Martínez',role:'Gerente Comercial - Cadena Retail Nacional',av:'AM'},
             ].map((t,i)=>(
               <div class="tcard reveal" key={i}>
                 <div class="tc-stars">★★★★★</div>
@@ -360,12 +360,12 @@ app.get('/', (c) => {
           </div>
           <div class="faq-list">
             {[
-              {q:'Que servicios ofrece Grupo Consiti?',a:'Ofrecemos desarrollo de software a medida, implementacion ERP/CRM (Odoo, Salesforce), inteligencia artificial, migracion y gestion cloud (Google Cloud, Oracle), integracion de sistemas y analitica de datos.'},
-              {q:'Como puede Grupo Consiti mejorar la eficiencia de mi organizacion?',a:'A traves de optimizacion de procesos y aplicaciones personalizadas, automatizamos flujos de trabajo, mejoramos la experiencia del cliente y reducimos costos operativos.'},
-              {q:'Con que tecnologias trabajan?',a:'Google Cloud, Oracle OCI, Python, Node.js, React, .NET, Odoo, Salesforce, TensorFlow y mas. Adaptamos la stack segun las necesidades de cada proyecto.'},
-              {q:'Trabajan con organizaciones del sector publico?',a:'Si, tenemos amplia experiencia con entidades publicas: sistemas de gestion tributaria, portales ciudadanos, plataformas de tramites digitales y mas.'},
-              {q:'En que paises tienen presencia?',a:'Nuestra sede principal esta en El Salvador (Mejicanos, San Salvador). Tambien atendemos proyectos en Guatemala, Honduras, Costa Rica, Panama y otros paises de Centroamerica y LATAM.'},
-              {q:'Cual es el tiempo tipico de una implementacion?',a:'Implementaciones basicas de ERP pueden completarse en 2-4 meses. Proyectos complejos de transformacion digital pueden tomar 6-18 meses, siempre con entregas parciales.'},
+              {q:'¿Qué servicios ofrece Grupo Consiti?',a:'Ofrecemos desarrollo de software a medida, implementación ERP/CRM (Odoo, Salesforce), inteligencia artificial, migración y gestión cloud (Google Cloud, Oracle), integración de sistemas y analítica de datos.'},
+              {q:'¿Cómo puede Grupo Consiti mejorar la eficiencia de mi organización?',a:'A través de optimización de procesos y aplicaciones personalizadas, automatizamos flujos de trabajo, mejoramos la experiencia del cliente y reducimos costos operativos.'},
+              {q:'¿Con qué tecnologías trabajan?',a:'Google Cloud, Oracle OCI, Python, Node.js, React, .NET, Odoo, Salesforce, TensorFlow y más. Adaptamos la stack según las necesidades de cada proyecto.'},
+              {q:'¿Trabajan con organizaciones del sector público?',a:'Sí, tenemos amplia experiencia con entidades públicas: sistemas de gestión tributaria, portales ciudadanos, plataformas de trámites digitales y más.'},
+              {q:'¿En qué países tienen presencia?',a:'Nuestra sede principal está en El Salvador (Mejicanos, San Salvador). También atendemos proyectos en Guatemala, Honduras, Costa Rica, Panamá y otros países de Centroamérica y LATAM.'},
+              {q:'¿Cuál es el tiempo típico de una implementación?',a:'Implementaciones básicas de ERP pueden completarse en 2-4 meses. Proyectos complejos de transformación digital pueden tomar 6-18 meses, siempre con entregas parciales.'},
             ].map((f,i)=>(
               <div class="faq-item reveal" key={i} id={`faq-${i}`}>
                 <button class="faq-q" onclick={`toggleFaq(${i})`} aria-expanded="false"><span>{f.q}</span><span class="faq-icon">+</span></button>
@@ -381,14 +381,14 @@ app.get('/', (c) => {
         <div class="wrap grid-2col">
           <div class="reveal">
             <div class="chip chip-light">Comencemos</div>
-            <h2 class="sec-h2 white">Listo para transformar<br/><span class="accent-light">su organizacion?</span></h2>
-            <p class="sec-p light mb32">Cuentenos su desafio. Nuestro equipo de expertos disenara una hoja de ruta personalizada para su transformacion digital.</p>
+            <h2 class="sec-h2 white">Listo para transformar<br/><span class="accent-light">su organización?</span></h2>
+            <p class="sec-p light mb32">Cuéntenos su desafío. Nuestro equipo de expertos diseñará una hoja de ruta personalizada para su transformación digital.</p>
             <div class="cta-items">
               {[
-                {icon:I.zap,    t:'Respuesta rapida',  d:'Menos de 24 horas habiles'},
+                {icon:I.zap,    t:'Respuesta rápida',  d:'Menos de 24 horas hábiles'},
                 {icon:I.shield, t:'Sin costo inicial',  d:'Primera consulta gratuita'},
                 {icon:I.target, t:'A su medida',        d:'Propuesta personalizada'},
-                {icon:I.mappin, t:'Sede El Salvador',   d:'Con cobertura en Centroamerica y LATAM'},
+                {icon:I.mappin, t:'Sede El Salvador',   d:'Con cobertura en Centroamérica y LATAM'},
               ].map((x,i)=>(
                 <div class="cta-row" key={i}><div class="cta-icon" dangerouslySetInnerHTML={{__html:x.icon}}/><div><div class="cta-t">{x.t}</div><div class="cta-d">{x.d}</div></div></div>
               ))}
@@ -397,13 +397,13 @@ app.get('/', (c) => {
           <div class="reveal">
             <form class="cform" id="contactForm">
               <h3 class="cform-h">Solicite una consulta gratuita</h3>
-              <div class="frow2"><div class="fgroup"><label class="flabel">Nombre completo</label><input type="text" class="finput" placeholder="Ej: Juan Garcia" required /></div><div class="fgroup"><label class="flabel">Empresa</label><input type="text" class="finput" placeholder="Su organizacion" required /></div></div>
-              <div class="fgroup"><label class="flabel">Correo electronico</label><input type="email" class="finput" placeholder="correo@empresa.com" required /></div>
-              <div class="fgroup"><label class="flabel">Telefono / WhatsApp</label><input type="tel" class="finput" placeholder="+503 7255 9059" /></div>
-              <div class="fgroup"><label class="flabel">Principal desafio</label><select class="finput fselect"><option value="">Seleccione una opcion</option><option>Automatizacion de procesos</option><option>Implementacion ERP/CRM</option><option>Migracion a la nube</option><option>IA / Data</option><option>Integracion de sistemas</option><option>Otro</option></select></div>
-              <div class="fgroup"><label class="flabel">Mensaje (opcional)</label><textarea class="finput ftarea" placeholder="Cuentenos mas..." rows={3}></textarea></div>
+              <div class="frow2"><div class="fgroup"><label class="flabel">Nombre completo</label><input type="text" class="finput" placeholder="Ej: Juan García" required /></div><div class="fgroup"><label class="flabel">Empresa</label><input type="text" class="finput" placeholder="Su organización" required /></div></div>
+              <div class="fgroup"><label class="flabel">Correo electrónico</label><input type="email" class="finput" placeholder="correo@empresa.com" required /></div>
+              <div class="fgroup"><label class="flabel">Teléfono / WhatsApp</label><input type="tel" class="finput" placeholder="+503 7255 9059" /></div>
+              <div class="fgroup"><label class="flabel">Principal desafío</label><select class="finput fselect"><option value="">Seleccione una opción</option><option>Automatización de procesos</option><option>Implementación ERP/CRM</option><option>Migración a la nube</option><option>IA / Data</option><option>Integración de sistemas</option><option>Otro</option></select></div>
+              <div class="fgroup"><label class="flabel">Mensaje (opcional)</label><textarea class="finput ftarea" placeholder="Cuéntenos más..." rows={3}></textarea></div>
               <a href="https://wa.me/50372559059" target="_blank" rel="noopener" class="btn-submit" style="text-decoration:none">Solicitar Demo por WhatsApp <span class="btn-arr">&rarr;</span></a>
-              <p class="fnote">Al enviar, acepta nuestra <a href="#privacidad" id="privacidad">politica de privacidad</a>.</p>
+              <p class="fnote">Al enviar, acepta nuestra <a href="#privacidad" id="privacidad">política de privacidad</a>.</p>
             </form>
           </div>
         </div>
@@ -413,7 +413,7 @@ app.get('/', (c) => {
       <footer class="footer">
         <div class="wrap">
           <div class="ft-top">
-            <div class="ft-brand"><img src="/static/icon-dark.png" alt="Grupo Consiti" class="ft-iso" /><p class="ft-tag">Transformacion digital con Software,<br/>Inteligencia Artificial y Cloud<br/>en toda Latinoamerica.</p>
+            <div class="ft-brand"><img src="/static/icon-dark.png" alt="Grupo Consiti" class="ft-iso" /><p class="ft-tag">Transformación digital con Software,<br/>Inteligencia Artificial y Cloud<br/>en toda Latinoamérica.</p>
               <div class="ft-social">
                 {[
                   {label:'LinkedIn',svg:I.linkedin,url:'https://www.linkedin.com/company/grupo-consiti/posts/?feedView=all'},
@@ -423,12 +423,12 @@ app.get('/', (c) => {
               </div>
             </div>
             <div class="ft-cols">
-              <div class="ft-col"><div class="ft-col-h">Servicios</div><ul><li><a href="#servicios">Desarrollo de Software</a></li><li><a href="#servicios">Inteligencia Artificial</a></li><li><a href="#servicios">Cloud & Infraestructura</a></li><li><a href="#servicios">Implementacion ERP</a></li><li><a href="#servicios">Analitica & BI</a></li></ul></div>
-              <div class="ft-col"><div class="ft-col-h">Empresa</div><ul><li><a href="#nosotros">Sobre nosotros</a></li><li><a href="#casos">Casos de exito</a></li><li><a href="#ecosistema">Ecosistema</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contacto">Blog</a></li></ul></div>
+              <div class="ft-col"><div class="ft-col-h">Servicios</div><ul><li><a href="#servicios">Desarrollo de Software</a></li><li><a href="#servicios">Inteligencia Artificial</a></li><li><a href="#servicios">Cloud & Infraestructura</a></li><li><a href="#servicios">Implementación ERP</a></li><li><a href="#servicios">Analítica & BI</a></li></ul></div>
+              <div class="ft-col"><div class="ft-col-h">Empresa</div><ul><li><a href="#nosotros">Sobre nosotros</a></li><li><a href="#casos">Casos de éxito</a></li><li><a href="#ecosistema">Ecosistema</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contacto">Blog</a></li></ul></div>
               <div class="ft-col"><div class="ft-col-h">Contacto</div><ul><li><a href="mailto:info@consiti.com">info@consiti.com</a></li><li><a href="https://wa.me/50372559059" target="_blank" rel="noopener">+503 7255 9059</a></li><li><a href="#contacto">Mejicanos, Col. la Gloria, Pol. G3, San Salvador</a></li><li><a href="https://wa.me/50372559059" target="_blank" rel="noopener">Solicitar demo</a></li></ul></div>
             </div>
           </div>
-          <div class="ft-bottom"><span>&copy; 2025 Grupo Consiti. Todos los derechos reservados.</span><div class="ft-legal"><a href="#privacidad">Politica de privacidad</a><a href="#">Terminos de uso</a></div></div>
+          <div class="ft-bottom"><span>&copy; 2025 Grupo Consiti. Todos los derechos reservados.</span><div class="ft-legal"><a href="#privacidad">Política de privacidad</a><a href="#">Términos de uso</a></div></div>
         </div>
       </footer>
 
