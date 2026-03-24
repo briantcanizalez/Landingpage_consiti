@@ -55,7 +55,7 @@ const I = {
   bigquery: `<svg viewBox="0 0 24 24"><path d="M6 4h3v16H6z" fill="#4285F4"/><path d="M11 8h3v12h-3z" fill="#4285F4"/><path d="M16 12h3v8h-3z" fill="#4285F4"/><path d="M3 20h18v2H3z" fill="#4285F4"/></svg>`,
   /* Social */
   linkedin: `<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>`,
-  twitter:  `<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>`,
+  facebook: `<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>`,
   youtube:  `<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>`,
   /* Check */
   check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
@@ -79,7 +79,7 @@ app.get('/', (c) => {
           </nav>
           <div class="nav-actions">
             <a href="#contacto" class="btn-nav-ghost">Contacto</a>
-            <a href="#contacto" class="btn-nav-fill">Habla con nosotros</a>
+            <a href="https://wa.me/50372559059" target="_blank" rel="noopener" class="btn-nav-fill">Solicitar Demo</a>
           </div>
           <button class="nav-burger" id="navBurger" aria-label="Menu">
             <span></span><span></span><span></span>
@@ -91,8 +91,8 @@ app.get('/', (c) => {
       <section class="hero">
         <div class="wrap hero-inner">
           <div class="hero-content">
-            <div class="hero-badge"><span class="badge-dot"></span>Socio estrategico &middot; +12 anos en LATAM</div>
-            <h1 class="hero-h1">Somos la compania de<br/><span class="hero-accent">Transformacion Digital</span><br/>mas comprometida de LATAM</h1>
+            <div class="hero-badge"><span class="badge-dot"></span>Socio estrategico &middot; +12 anos en El Salvador y LATAM</div>
+            <h1 class="hero-h1">Somos la compania de<br/><span class="hero-accent">Transformacion Digital</span><br/>mas comprometida de El Salvador</h1>
             <p class="hero-sub">En Grupo Consiti impulsamos la innovacion y entregamos soluciones de Software, IA y Cloud que ayudan a las organizaciones a escalar y alcanzar sus objetivos.</p>
             <div class="hero-checks">
               {['Soluciones tecnologicas de vanguardia a su medida','Equipo experto certificado en Software, IA y Cloud','Confianza de organizaciones en toda Latinoamerica'].map((t,i)=>(
@@ -100,7 +100,7 @@ app.get('/', (c) => {
               ))}
             </div>
             <div class="hero-ctas">
-              <a href="#contacto" class="btn-primary">Habla con un experto <span class="btn-arr">&rarr;</span></a>
+              <a href="https://wa.me/50372559059" target="_blank" rel="noopener" class="btn-primary">Solicitar Demo <span class="btn-arr">&rarr;</span></a>
               <a href="#casos" class="btn-outline">Ver casos de exito</a>
             </div>
           </div>
@@ -183,7 +183,7 @@ app.get('/', (c) => {
             </div>
             <div class="about-mini-card">
               <span class="amc-icon" dangerouslySetInnerHTML={{__html: I.globe}}/>
-              <span>Presencia en <strong>Colombia, Mexico, Ecuador, Peru, Chile, Panama, Costa Rica</strong> y mas.</span>
+              <span>Sede principal en <strong>El Salvador</strong> con presencia en <strong>Guatemala, Honduras, Costa Rica, Panama</strong> y mas paises de LATAM.</span>
             </div>
           </div>
         </div>
@@ -227,7 +227,7 @@ app.get('/', (c) => {
             {[
               {name:'Google Cloud',cat:'Partner Premier',count:'+50 clientes',desc:'Infraestructura cloud, BigQuery, Vertex AI y Google Workspace.',icon:I.googleCloud,color:'#4285f4'},
               {name:'Oracle',cat:'Gold Partner',count:'+30 clientes',desc:'Oracle ERP Cloud, Oracle Database y OCI Infrastructure.',icon:I.oracle,color:'#C74634'},
-              {name:'Odoo',cat:'Certified Partner',count:'+60 clientes',desc:'ERP modular para manufactura, retail, servicios y gobierno.',icon:I.odoo,color:'#714B67'},
+              {name:'Odoo',cat:'Certified Partner',count:'+1,000 clientes',desc:'ERP modular con Odoo Factura IA, facturacion electronica y +80 modulos para manufactura, retail, servicios y gobierno.',icon:I.odoo,color:'#714B67'},
               {name:'Salesforce',cat:'Consulting Partner',count:'+20 clientes',desc:'CRM, Service Cloud, Marketing Cloud y automatizacion de ventas.',icon:I.salesforce,color:'#00a1e0'},
             ].map((p,i)=>(
               <div class="eco-card reveal" key={i}>
@@ -253,11 +253,11 @@ app.get('/', (c) => {
           <div class="cases-grid">
             {[
               {
-                sector:'Sector Publico',tag:'ERP - Gobierno',
-                title:'Modernizacion de gestion tributaria municipal',
-                desc:'Sistema ERP con Odoo para digitalizar recaudo y gestion de impuestos, eliminando procesos manuales y reduciendo tiempos de dias a minutos.',
-                results:[{val:'90%',lbl:'Reduccion en tiempos'},{val:'3x',lbl:'Incremento en recaudo'},{val:'0',lbl:'Errores en liquidacion'}],
-                tech:[{name:'Odoo',svg:I.odoo},{name:'Python',svg:I.python},{name:'PostgreSQL',svg:I.postgresql}],
+                sector:'Facturacion Electronica',tag:'Odoo Factura IA',
+                title:'Odoo Factura IA - Facturacion electronica en El Salvador',
+                desc:'Plataforma integral que conecta empresas con el Ministerio de Hacienda sobre arquitectura escalable en Google Cloud. +1,000 clientes activos y escalando hacia +3,000 PYMEs.',
+                results:[{val:'+1,000',lbl:'Clientes activos'},{val:'+3,000',lbl:'PYMEs en expansion'},{val:'100%',lbl:'Cumplimiento fiscal'}],
+                tech:[{name:'Odoo',svg:I.odoo},{name:'Google Cloud',svg:I.googleCloud},{name:'Python',svg:I.python},{name:'PostgreSQL',svg:I.postgresql}],
               },
               {
                 sector:'Industria Manufacturera',tag:'IA - Computer Vision',
@@ -364,7 +364,7 @@ app.get('/', (c) => {
               {q:'Como puede Grupo Consiti mejorar la eficiencia de mi organizacion?',a:'A traves de optimizacion de procesos y aplicaciones personalizadas, automatizamos flujos de trabajo, mejoramos la experiencia del cliente y reducimos costos operativos.'},
               {q:'Con que tecnologias trabajan?',a:'Google Cloud, Oracle OCI, Python, Node.js, React, .NET, Odoo, Salesforce, TensorFlow y mas. Adaptamos la stack segun las necesidades de cada proyecto.'},
               {q:'Trabajan con organizaciones del sector publico?',a:'Si, tenemos amplia experiencia con entidades publicas: sistemas de gestion tributaria, portales ciudadanos, plataformas de tramites digitales y mas.'},
-              {q:'En que paises tienen presencia?',a:'Colombia, Mexico, Ecuador, Peru, Chile, Panama, Costa Rica y otros paises de LATAM. Nuestro equipo distribuido atiende proyectos en toda la region.'},
+              {q:'En que paises tienen presencia?',a:'Nuestra sede principal esta en El Salvador (Mejicanos, San Salvador). Tambien atendemos proyectos en Guatemala, Honduras, Costa Rica, Panama y otros paises de Centroamerica y LATAM.'},
               {q:'Cual es el tiempo tipico de una implementacion?',a:'Implementaciones basicas de ERP pueden completarse en 2-4 meses. Proyectos complejos de transformacion digital pueden tomar 6-18 meses, siempre con entregas parciales.'},
             ].map((f,i)=>(
               <div class="faq-item reveal" key={i} id={`faq-${i}`}>
@@ -388,7 +388,7 @@ app.get('/', (c) => {
                 {icon:I.zap,    t:'Respuesta rapida',  d:'Menos de 24 horas habiles'},
                 {icon:I.shield, t:'Sin costo inicial',  d:'Primera consulta gratuita'},
                 {icon:I.target, t:'A su medida',        d:'Propuesta personalizada'},
-                {icon:I.mappin, t:'Cobertura LATAM',    d:'Atencion en 8 paises'},
+                {icon:I.mappin, t:'Sede El Salvador',   d:'Con cobertura en Centroamerica y LATAM'},
               ].map((x,i)=>(
                 <div class="cta-row" key={i}><div class="cta-icon" dangerouslySetInnerHTML={{__html:x.icon}}/><div><div class="cta-t">{x.t}</div><div class="cta-d">{x.d}</div></div></div>
               ))}
@@ -399,10 +399,10 @@ app.get('/', (c) => {
               <h3 class="cform-h">Solicite una consulta gratuita</h3>
               <div class="frow2"><div class="fgroup"><label class="flabel">Nombre completo</label><input type="text" class="finput" placeholder="Ej: Juan Garcia" required /></div><div class="fgroup"><label class="flabel">Empresa</label><input type="text" class="finput" placeholder="Su organizacion" required /></div></div>
               <div class="fgroup"><label class="flabel">Correo electronico</label><input type="email" class="finput" placeholder="correo@empresa.com" required /></div>
-              <div class="fgroup"><label class="flabel">Telefono / WhatsApp</label><input type="tel" class="finput" placeholder="+57 300 000 0000" /></div>
+              <div class="fgroup"><label class="flabel">Telefono / WhatsApp</label><input type="tel" class="finput" placeholder="+503 7255 9059" /></div>
               <div class="fgroup"><label class="flabel">Principal desafio</label><select class="finput fselect"><option value="">Seleccione una opcion</option><option>Automatizacion de procesos</option><option>Implementacion ERP/CRM</option><option>Migracion a la nube</option><option>IA / Data</option><option>Integracion de sistemas</option><option>Otro</option></select></div>
               <div class="fgroup"><label class="flabel">Mensaje (opcional)</label><textarea class="finput ftarea" placeholder="Cuentenos mas..." rows={3}></textarea></div>
-              <button type="submit" class="btn-submit">Enviar solicitud <span class="btn-arr">&rarr;</span></button>
+              <a href="https://wa.me/50372559059" target="_blank" rel="noopener" class="btn-submit" style="text-decoration:none">Solicitar Demo por WhatsApp <span class="btn-arr">&rarr;</span></a>
               <p class="fnote">Al enviar, acepta nuestra <a href="#privacidad" id="privacidad">politica de privacidad</a>.</p>
             </form>
           </div>
@@ -416,16 +416,16 @@ app.get('/', (c) => {
             <div class="ft-brand"><img src="/static/icon-dark.png" alt="Grupo Consiti" class="ft-iso" /><p class="ft-tag">Transformacion digital con Software,<br/>Inteligencia Artificial y Cloud<br/>en toda Latinoamerica.</p>
               <div class="ft-social">
                 {[
-                  {label:'LinkedIn',svg:I.linkedin},
-                  {label:'Twitter/X',svg:I.twitter},
-                  {label:'YouTube',svg:I.youtube},
-                ].map((s,i)=>(<a href="#" class="ft-soc" key={i} aria-label={s.label}><span dangerouslySetInnerHTML={{__html:`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">${s.svg}</svg>`}}/></a>))}
+                  {label:'LinkedIn',svg:I.linkedin,url:'https://www.linkedin.com/company/grupo-consiti/posts/?feedView=all'},
+                  {label:'Facebook',svg:I.facebook,url:'https://www.facebook.com/GrupoConsiti'},
+                  {label:'YouTube',svg:I.youtube,url:'https://www.youtube.com/@GrupoConsiti'},
+                ].map((s,i)=>(<a href={s.url} target="_blank" rel="noopener" class="ft-soc" key={i} aria-label={s.label}><span dangerouslySetInnerHTML={{__html:`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">${s.svg}</svg>`}}/></a>))}
               </div>
             </div>
             <div class="ft-cols">
               <div class="ft-col"><div class="ft-col-h">Servicios</div><ul><li><a href="#servicios">Desarrollo de Software</a></li><li><a href="#servicios">Inteligencia Artificial</a></li><li><a href="#servicios">Cloud & Infraestructura</a></li><li><a href="#servicios">Implementacion ERP</a></li><li><a href="#servicios">Analitica & BI</a></li></ul></div>
               <div class="ft-col"><div class="ft-col-h">Empresa</div><ul><li><a href="#nosotros">Sobre nosotros</a></li><li><a href="#casos">Casos de exito</a></li><li><a href="#ecosistema">Ecosistema</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contacto">Blog</a></li></ul></div>
-              <div class="ft-col"><div class="ft-col-h">Contacto</div><ul><li><a href="mailto:info@consiti.com">info@consiti.com</a></li><li><a href="tel:+573000000000">+57 300 000 0000</a></li><li><a href="#contacto">Bogota, Colombia</a></li><li><a href="#contacto">Solicitar demo</a></li></ul></div>
+              <div class="ft-col"><div class="ft-col-h">Contacto</div><ul><li><a href="mailto:info@consiti.com">info@consiti.com</a></li><li><a href="https://wa.me/50372559059" target="_blank" rel="noopener">+503 7255 9059</a></li><li><a href="#contacto">Mejicanos, Col. la Gloria, Pol. G3, San Salvador</a></li><li><a href="https://wa.me/50372559059" target="_blank" rel="noopener">Solicitar demo</a></li></ul></div>
             </div>
           </div>
           <div class="ft-bottom"><span>&copy; 2025 Grupo Consiti. Todos los derechos reservados.</span><div class="ft-legal"><a href="#privacidad">Politica de privacidad</a><a href="#">Terminos de uso</a></div></div>
