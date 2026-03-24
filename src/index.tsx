@@ -124,22 +124,31 @@ app.get('/', (c) => {
         </div>
       </section>
 
-      {/* ── CLIENTS ── */}
+      {/* ── CLIENTS CAROUSEL ── */}
       <section class="section sec-clients">
         <div class="wrap">
           <p class="clients-label">Grandes empresas que depositaron toda su confianza en nosotros</p>
-          <div class="clients-row">
-            {[
-              {name:'Banco Hipotecario', file:'banco-hipotecario.png'},
-              {name:'Davivienda',         file:'davivienda.png'},
-              {name:'Credisiman',         file:'credisiman.png'},
-              {name:'Siman',              file:'siman.png'},
-              {name:'Pull&Bear',          file:'pullbear.png'},
-              {name:'Multi Money',        file:'multimoney.png'},
-            ].map((cl,i)=>(
-              <div class="client-logo" key={i}>
-                <img src={`/static/clients/${cl.file}`} alt={cl.name} class="cl-img" />
-              </div>
+        </div>
+        <div class="carousel-outer">
+          <div class="carousel-fade carousel-fade-left"></div>
+          <div class="carousel-fade carousel-fade-right"></div>
+          <div class="carousel-track" id="carouselTrack">
+            {/* Duplicamos 3x para loop infinito sin saltos */}
+            {[0,1,2].map((_round, ri) => (
+              <>
+              {[
+                {name:'Banco Hipotecario', file:'banco-hipotecario.png'},
+                {name:'Davivienda',         file:'davivienda.png'},
+                {name:'Credisiman',         file:'credisiman.png'},
+                {name:'Siman',              file:'siman.png'},
+                {name:'Pull&Bear',          file:'pullbear.png'},
+                {name:'Multi Money',        file:'multimoney.png'},
+              ].map((cl,i)=>(
+                <div class="carousel-item" key={`${ri}-${i}`}>
+                  <img src={`/static/clients/${cl.file}`} alt={cl.name} class="cl-img" />
+                </div>
+              ))}
+              </>
             ))}
           </div>
         </div>
@@ -440,6 +449,28 @@ app.get('/', (c) => {
         document.querySelectorAll('.faq-a').forEach(x=>x.classList.remove('open'));
         if(!o){b.setAttribute('aria-expanded','true');b.querySelector('.faq-icon').textContent=String.fromCharCode(8722);a.classList.add('open')}};
         const fm=document.getElementById('contactForm');if(fm)fm.addEventListener('submit',e=>{e.preventDefault();const b=fm.querySelector('.btn-submit');b.innerHTML='\\u2713 Solicitud enviada';b.style.background='#059669';b.disabled=true});
+
+        /* Carousel in-view detection */
+        (function(){
+          const track=document.getElementById('carouselTrack');
+          if(!track)return;
+          function updateInView(){
+            const items=track.querySelectorAll('.carousel-item');
+            const vw=window.innerWidth;
+            const cx=vw/2;
+            const zone=vw*0.28;
+            items.forEach(function(item){
+              const r=item.getBoundingClientRect();
+              const mid=r.left+r.width/2;
+              const dist=Math.abs(mid-cx);
+              if(dist<zone){item.classList.add('in-view')}
+              else{item.classList.remove('in-view')}
+            });
+          }
+          let ticking=false;
+          function loop(){updateInView();requestAnimationFrame(loop)}
+          loop();
+        })();
       `}}/>
     </>
   )
