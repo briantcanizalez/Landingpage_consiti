@@ -4,43 +4,67 @@ import { renderer } from './renderer'
 const app = new Hono()
 app.use(renderer)
 
+/* ── Favicon ── */
 app.get('/favicon.svg', (c) => {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0b1e3d"/><path d="M9 10 L15 16 L9 22 M16 10 L22 16 L16 22" stroke="#00c896" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#5216e7"/><path d="M9 10 L15 16 L9 22 M16 10 L22 16 L16 22" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
   return c.body(svg, 200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' })
 })
 app.get('/favicon.ico', (c) => c.redirect('/favicon.svg', 301))
 
-/* ───── Real SVG icons for tech stack ───── */
-const ICONS: Record<string,string> = {
-  googleCloud: `<svg viewBox="0 0 24 24" width="28" height="28"><path d="M12.19 2.38a9.34 9.34 0 0 0-9.07 6.88h.01l-.03.16a5.8 5.8 0 0 0-2.6 4.74A5.84 5.84 0 0 0 6.33 20h.42l-.01-.02h11.55l.03.02A4.7 4.7 0 0 0 23 15.32a4.71 4.71 0 0 0-3.48-4.56l.01-.06A9.34 9.34 0 0 0 12.19 2.38zM12.19 4a7.71 7.71 0 0 1 6.1 6.36l.15.77.8.13A3.1 3.1 0 0 1 21.38 15.32 3.08 3.08 0 0 1 18.3 18.38H6.33A4.22 4.22 0 0 1 2.12 14.16a4.22 4.22 0 0 1 1.97-3.56l.59-.38-.12-.69A7.71 7.71 0 0 1 12.19 4z" fill="#4285F4"/><path d="M13.8 12.5h3.1l.5 1.5H13.8z" fill="#4285F4"/></svg>`,
-  oracle: `<svg viewBox="0 0 24 24" width="28" height="28"><path d="M8.4 16.2c-2.3 0-4.2-1.9-4.2-4.2S6.1 7.8 8.4 7.8h7.2c2.3 0 4.2 1.9 4.2 4.2s-1.9 4.2-4.2 4.2H8.4zM15.6 14.4c1.3 0 2.4-1.1 2.4-2.4s-1.1-2.4-2.4-2.4H8.4C7.1 9.6 6 10.7 6 12s1.1 2.4 2.4 2.4h7.2z" fill="#C74634"/></svg>`,
-  odoo: `<svg viewBox="0 0 24 24" width="28" height="28"><circle cx="12" cy="12" r="10" fill="#714B67"/><circle cx="12" cy="12" r="4" fill="white"/></svg>`,
-  salesforce: `<svg viewBox="0 0 24 24" width="28" height="28"><path d="M10.05 4.85c.9-.95 2.15-1.55 3.55-1.55 1.85 0 3.45 1.05 4.3 2.6a5.32 5.32 0 0 1 2.2-.48c2.95 0 5.35 2.4 5.35 5.36s-2.4 5.36-5.35 5.36c-.45 0-.88-.06-1.3-.16a4.56 4.56 0 0 1-3.95 2.32c-.73 0-1.42-.18-2.03-.49a5.15 5.15 0 0 1-4.57 2.79c-2.28 0-4.2-1.48-4.88-3.53a4.49 4.49 0 0 1-.77.07A4.6 4.6 0 0 1-1.6 12.54c0-1.64.87-3.08 2.17-3.89A4.3 4.3 0 0 1 .3 7c0-2.37 1.92-4.3 4.3-4.3 1.41 0 2.66.68 3.45 1.73z" fill="#00A1E0" transform="translate(1.3 1.5) scale(.85)"/></svg>`,
-  python: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M11.92 0C5.88 0 6.25 2.63 6.25 2.63l.01 2.73h5.77v.82H3.82S0 5.73 0 11.89s3.33 5.94 3.33 5.94h1.99v-2.86s-.11-3.33 3.28-3.33h5.65s3.17.05 3.17-3.07V3.54S17.95 0 11.92 0zm-3.14 2.05a1.02 1.02 0 1 1 0 2.04 1.02 1.02 0 0 1 0-2.04z" fill="#3776AB"/><path d="M12.08 24c6.04 0 5.67-2.63 5.67-2.63l-.01-2.73h-5.77v-.82h8.21S24 18.27 24 12.11s-3.33-5.94-3.33-5.94h-1.99v2.86s.11 3.33-3.28 3.33H9.75s-3.17-.05-3.17 3.07v5.03S6.05 24 12.08 24zm3.14-2.05a1.02 1.02 0 1 1 0-2.04 1.02 1.02 0 0 1 0 2.04z" fill="#FFD43B"/></svg>`,
-  tensorflow: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M1.29 6.64L12 .53l10.71 6.11v1.37L12 14.12 1.29 8.01V6.64zm0 4.37L12 17.12l10.71-6.11v3L12 20.12 1.29 14.01v-3z" fill="#FF6F00"/></svg>`,
-  postgresql: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M17.13 2.14c-1.47-.3-2.25-.15-2.25-.15s.73.57.53 1.27c-.22.77-1.42 1.34-1.42 1.34S15.13 5.69 15 7.34c-.07.9-.62 2.69-1.63 3.37-.57.38-1.17.22-1.53-.11-.73-.67-.43-1.9-.43-1.9s-.72.83-.9 1.73c-.2 1-.06 2.17.79 2.78.67.48 1.57.36 2.17-.01 1.5-.93 2.22-3.26 2.25-4.62.03-1.26-.28-2.13-.55-2.69-.12-.25-.4-.67-.4-.67s1.24-.59 1.56-1.8c.15-.57-.07-1.04-.2-1.28z" fill="#336791"/><path d="M11.99 1C6.47 1 2 5.47 2 11s4.47 10 9.99 10S22 16.53 22 11 17.52 1 11.99 1zm5.92 15.89c-.56.89-1.81 1.62-1.81 1.62s-.1.77-.52 1.35c-.43.6-1.21.91-1.21.91s-1.11.08-1.78-.39c-.67-.47-1-1.29-.89-2.2.1-.82.67-1.64.67-1.64l-.03-.07c-.87.06-1.67-.23-2.15-.74-.63-.67-.79-1.6-.49-2.38.36-.93 1.22-1.67 2.05-2.02 0 0-.16-.83.3-1.83.4-.86 1.02-1.53 1.02-1.53s-.37-.67-.37-1.41c0-.89.47-1.89 1.59-1.89.53 0 .89.23 1.1.55.41.65.13 1.51-.12 2.13-.12.3-.62 1.14-.62 1.14s.38.63.59 1.25c.34 1 .32 2.16-.12 3.43-.32.9-.94 1.66-1.39 2.09 0 0 .18.4.19.98.02.8-.4 1.51-.4 1.51s.87-.33 1.49-1.01c.67-.73 1-1.59 1.24-2.57.33-1.32.12-2.67-.29-3.62z" fill="#336791" opacity=".3"/></svg>`,
-  nodejs: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 1.85c-.27 0-.55.07-.78.2l-7.44 4.3c-.48.28-.78.8-.78 1.36v8.58c0 .56.3 1.08.78 1.36l1.95 1.13c.94.47 1.27.46 1.7.46 1.39 0 2.18-.84 2.18-2.31V8.47c0-.12-.1-.22-.22-.22H8.5c-.12 0-.22.1-.22.22v8.06c0 .65-.68 1.31-1.77.76L4.43 16.1a.26.26 0 0 1-.13-.22V7.3c0-.09.05-.17.13-.22l7.44-4.3a.26.26 0 0 1 .26 0l7.44 4.3c.08.05.13.13.13.22v8.58a.26.26 0 0 1-.13.22l-7.44 4.3a.26.26 0 0 1-.26 0l-1.88-1.11a.2.2 0 0 0-.19-.02c-.52.22-.62.25-1.11.38-.12.03-.3.08.07.24l2.45 1.45c.24.14.51.2.78.2.27 0 .55-.07.78-.2l7.44-4.3c.48-.28.78-.8.78-1.36V7.71c0-.56-.3-1.08-.78-1.36l-7.44-4.3a1.57 1.57 0 0 0-.78-.2z" fill="#539E43"/></svg>`,
-  react: `<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="2.14" fill="#61DAFB"/><path d="M12 6.62c3.44 0 6.59.72 8.84 1.88C23.1 9.65 24 11.12 24 12s-.9 2.35-3.16 3.5C18.59 16.66 15.44 17.38 12 17.38s-6.59-.72-8.84-1.88C.9 14.35 0 12.88 0 12s.9-2.35 3.16-3.5C5.41 7.34 8.56 6.62 12 6.62zm0 1.06c-3.3 0-6.31.67-8.4 1.76C1.59 10.47.94 11.56.94 12s.65 1.53 2.66 2.56c2.09 1.09 5.1 1.76 8.4 1.76s6.31-.67 8.4-1.76c2.01-1.03 2.66-2.12 2.66-2.56s-.65-1.53-2.66-2.56C18.31 8.35 15.3 7.68 12 7.68z" fill="#61DAFB"/><path d="M8.3 9.31c1.72-2.98 3.95-5.32 5.93-6.46 2.1-1.21 3.67-1.12 4.13-.32.46.8-.17 2.5-2.27 4.79-1.62 1.77-3.97 3.58-6.48 4.92-2.52 1.34-5.05 2.16-6.87 2.42C.46 15 .47 13.33.93 12.52c.46-.8 2.03-1.5 4.06-1.38.4.02.83.07 1.31.17z" fill="#61DAFB"/><path d="M8.3 14.69c-1.72-2.98-2.67-5.95-2.67-8.23C5.63 4.08 6.52 2.8 7.44 2.27c.93-.53 2.35-.17 3.97 1.6 1.25 1.37 2.37 3.5 3.14 5.94.77 2.44 1 4.84.72 6.66-.37 2.35-1.34 3.28-2.27 3.81-.93.53-2.35.17-3.97-1.6a15.2 15.2 0 0 1-1.73-2.83z" fill="#61DAFB" opacity=".8"/></svg>`,
-  bigquery: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M6 4h3v16H6z" fill="#4285F4"/><path d="M11 8h3v12h-3z" fill="#4285F4"/><path d="M16 12h3v8h-3z" fill="#4285F4"/><path d="M3 20h18v2H3z" fill="#4285F4"/></svg>`,
-  kubernetes: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 1L2.5 6v12L12 23l9.5-5V6L12 1zm0 2.18L19.42 7.1v9.8L12 20.82 4.58 16.9V7.1L12 3.18z" fill="#326CE5"/><path d="M12 7a.5.5 0 0 0-.5.5v3.38l-2.93-1.69a.5.5 0 0 0-.5.87L11 11.75v3.38a.5.5 0 0 0 1 0v-3.38l2.93 1.69a.5.5 0 0 0 .5-.87L12.5 10.88V7.5A.5.5 0 0 0 12 7z" fill="#326CE5"/></svg>`,
-  terraform: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M1 2.5v7l6 3.5v-7L1 2.5z" fill="#5C4EE5"/><path d="M8.5 6v7l6 3.5v-7L8.5 6z" fill="#5C4EE5"/><path d="M16 2.5v7l6 3.5v-7l-6-3.5z" fill="#5C4EE5" opacity=".5"/><path d="M8.5 17.5v7l6 3.5v-7l-6-3.5z" fill="#5C4EE5" transform="translate(0 -3.5)"/></svg>`,
-  whatsapp: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M17.47 14.38c-.28-.14-1.65-.82-1.9-.91-.26-.09-.44-.14-.63.14-.19.28-.72.91-.89 1.1-.16.19-.33.21-.61.07-.28-.14-1.18-.43-2.25-1.39-.83-.74-1.39-1.66-1.55-1.94-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.5-.07-.14-.63-1.52-.86-2.08-.23-.55-.46-.47-.63-.48-.16-.01-.35-.01-.54-.01-.19 0-.5.07-.77.35-.26.28-1.01.99-1.01 2.41s1.04 2.8 1.18 2.99c.14.19 2.04 3.12 4.95 4.37.69.3 1.23.47 1.65.61.69.22 1.32.19 1.82.11.56-.08 1.65-.67 1.88-1.32.23-.65.23-1.2.16-1.32-.07-.12-.26-.19-.54-.33zM12.05 21.78a9.68 9.68 0 0 1-4.93-1.35l-.35-.21-3.68.97.98-3.59-.23-.37A9.71 9.71 0 0 1 12.05 2.28c5.37 0 9.73 4.36 9.73 9.72a9.74 9.74 0 0 1-9.73 9.78zM12.05.5C5.61.5.55 5.56.55 12a11.48 11.48 0 0 0 1.54 5.74L.43 23.5l5.93-1.56A11.47 11.47 0 0 0 12.05 23.5C18.49 23.5 23.55 18.44 23.55 12S18.49.5 12.05.5z" fill="#25D366"/></svg>`,
-  looker: `<svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="none" stroke="#4285F4" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="#4285F4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="#4285F4" stroke-width="2" stroke-linecap="round"/></svg>`,
-  dotnet: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm-.36 18.77c-.1.1-.22.16-.35.16s-.26-.05-.36-.16a.49.49 0 0 1 0-.71.5.5 0 0 1 .71 0 .49.49 0 0 1 0 .71zm5.71-4.53c-.24.58-.63 1.08-1.14 1.49-.51.41-1.13.73-1.86.96-.73.23-1.57.35-2.52.35H10v1.73c0 .13-.03.24-.1.32a.35.35 0 0 1-.27.12h-1.3c-.11 0-.2-.04-.27-.12-.07-.08-.1-.19-.1-.32V9.05c0-.25.08-.46.25-.63.17-.17.38-.25.63-.25h3.42c.86 0 1.61.11 2.24.34.63.23 1.15.54 1.56.93.41.39.72.84.92 1.35.2.51.3 1.06.3 1.63 0 .67-.13 1.27-.39 1.82z" fill="#512BD4"/><path d="M14.38 9.96c-.3-.27-.65-.48-1.06-.62-.41-.14-.87-.21-1.39-.21h-1.56v4.94h1.56c.52 0 .98-.08 1.39-.23.41-.15.76-.36 1.06-.64.3-.28.53-.6.69-.98.16-.38.24-.79.24-1.24 0-.46-.08-.87-.24-1.24-.16-.37-.39-.7-.69-.98z" fill="#512BD4"/></svg>`,
-  restapi: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 4h16v2H4zm0 14h16v2H4z" fill="#6b7280"/><rect x="3" y="8" width="18" height="8" rx="2" fill="none" stroke="#6b7280" stroke-width="2"/><path d="M7 11h2v2H7zm4 0h6v2h-6z" fill="#6b7280"/></svg>`,
-  cloudsec: `<svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="none" stroke="#059669" stroke-width="2"/><path d="M10 12l2 2 4-4" stroke="#059669" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+/* ─── Minimalist line SVG icons (no 3D, no emoji) ─── */
+const I = {
+  /* Services */
+  code:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  brain:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 4.5 2.8A4 4 0 0 1 20 8.5a4.5 4.5 0 0 1-1 8.8A5 5 0 0 1 12 22a5 5 0 0 1-7-4.7 4.5 4.5 0 0 1-1-8.8A4 4 0 0 1 7.5 4.8 5 5 0 0 1 12 2z"/><path d="M12 2v20"/><path d="M4.9 7.5h14.2"/><path d="M4.9 16.5h14.2"/></svg>`,
+  cloud:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>`,
+  box:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
+  link:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`,
+  chart:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+  /* Hero / About */
+  rocket:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
+  users:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+  calendar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  globe:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  /* CTA items */
+  zap:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  shield:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  target:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+  mappin:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  /* Methodology */
+  search:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+  pen:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
+  layers:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  book:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  headset:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>`,
+  /* Tech stack */
+  googleCloud: `<svg viewBox="0 0 256 206"><path d="M170.252 56.82l22.253-22.252 1.47-9.38A128.026 128.026 0 0 0 31.474 79.165L39.6 78.4l44.505-7.34s2.268-3.768 3.412-3.553a83.528 83.528 0 0 1 82.735-10.686z" fill="#EA4335"/><path d="M218.6 79.166a128.23 128.23 0 0 0-38.687-62.49l-31.473 31.473A83.396 83.396 0 0 1 179.06 102.5v5.556A41.867 41.867 0 0 1 179.06 192h-51.062l-5.555 5.69v33.365l5.555 5.556h51.062a86.362 86.362 0 0 0 39.54-157.445z" fill="#4285F4"/><path d="M76.93 236.611h51.063V192H76.93a41.571 41.571 0 0 1-17.308-3.778l-11.958 3.667-22.388 22.252-2.932 11.515A85.932 85.932 0 0 0 76.93 236.611z" fill="#34A853"/><path d="M76.93 64.353A86.086 86.086 0 0 0 22.344 225.656l37.278-37.278A41.867 41.867 0 1 1 118 64.353h-.003l5.555-5.556V25.432L118 19.876H76.93z" fill="#FBBC05"/></svg>`,
+  oracle: `<svg viewBox="0 0 512 66"><path fill="#C74634" d="M33.207 0C14.88 0 0 14.88 0 33.207s14.88 33.207 33.207 33.207h445.586C497.12 66.414 512 51.534 512 33.207S497.12 0 478.793 0zm445.586 53.131H33.207C22.188 53.131 13.283 44.226 13.283 33.207S22.188 13.283 33.207 13.283h445.586c11.019 0 19.924 8.905 19.924 19.924s-8.905 19.924-19.924 19.924z"/></svg>`,
+  odoo: `<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="38" fill="#714B67"/><circle cx="40" cy="40" r="15" fill="white"/></svg>`,
+  salesforce: `<svg viewBox="0 0 24 24"><path d="M10.05 4.85c.9-.95 2.15-1.55 3.55-1.55 1.85 0 3.45 1.05 4.3 2.6a5.32 5.32 0 0 1 2.2-.48c2.95 0 5.35 2.4 5.35 5.36s-2.4 5.36-5.35 5.36c-.45 0-.88-.06-1.3-.16a4.56 4.56 0 0 1-3.95 2.32c-.73 0-1.42-.18-2.03-.49a5.15 5.15 0 0 1-4.57 2.79c-2.28 0-4.2-1.48-4.88-3.53a4.49 4.49 0 0 1-.77.07A4.6 4.6 0 0 1-1.6 12.54c0-1.64.87-3.08 2.17-3.89A4.3 4.3 0 0 1 .3 7c0-2.37 1.92-4.3 4.3-4.3 1.41 0 2.66.68 3.45 1.73z" fill="#00A1E0" transform="translate(1.3 1.5) scale(.85)"/></svg>`,
+  python: `<svg viewBox="0 0 24 24"><path d="M11.92 0C5.88 0 6.25 2.63 6.25 2.63l.01 2.73h5.77v.82H3.82S0 5.73 0 11.89s3.33 5.94 3.33 5.94h1.99v-2.86s-.11-3.33 3.28-3.33h5.65s3.17.05 3.17-3.07V3.54S17.95 0 11.92 0zm-3.14 2.05a1.02 1.02 0 1 1 0 2.04 1.02 1.02 0 0 1 0-2.04z" fill="#3776AB"/><path d="M12.08 24c6.04 0 5.67-2.63 5.67-2.63l-.01-2.73h-5.77v-.82h8.21S24 18.27 24 12.11s-3.33-5.94-3.33-5.94h-1.99v2.86s.11 3.33-3.28 3.33H9.75s-3.17-.05-3.17 3.07v5.03S6.05 24 12.08 24zm3.14-2.05a1.02 1.02 0 1 1 0-2.04 1.02 1.02 0 0 1 0 2.04z" fill="#FFD43B"/></svg>`,
+  tensorflow: `<svg viewBox="0 0 24 24"><path d="M1.29 6.64L12 .53l10.71 6.11v1.37L12 14.12 1.29 8.01V6.64zm0 4.37L12 17.12l10.71-6.11v3L12 20.12 1.29 14.01v-3z" fill="#FF6F00"/></svg>`,
+  postgresql: `<svg viewBox="0 0 24 24"><path d="M17.13 2.14c-1.47-.3-2.25-.15-2.25-.15s.73.57.53 1.27c-.22.77-1.42 1.34-1.42 1.34S15.13 5.69 15 7.34c-.07.9-.62 2.69-1.63 3.37-.57.38-1.17.22-1.53-.11-.73-.67-.43-1.9-.43-1.9s-.72.83-.9 1.73c-.2 1-.06 2.17.79 2.78.67.48 1.57.36 2.17-.01 1.5-.93 2.22-3.26 2.25-4.62.03-1.26-.28-2.13-.55-2.69-.12-.25-.4-.67-.4-.67s1.24-.59 1.56-1.8c.15-.57-.07-1.04-.2-1.28z" fill="#336791"/><path d="M11.99 1C6.47 1 2 5.47 2 11s4.47 10 9.99 10S22 16.53 22 11 17.52 1 11.99 1zm5.92 15.89c-.56.89-1.81 1.62-1.81 1.62s-.1.77-.52 1.35c-.43.6-1.21.91-1.21.91s-1.11.08-1.78-.39c-.67-.47-1-1.29-.89-2.2.1-.82.67-1.64.67-1.64l-.03-.07c-.87.06-1.67-.23-2.15-.74-.63-.67-.79-1.6-.49-2.38.36-.93 1.22-1.67 2.05-2.02 0 0-.16-.83.3-1.83.4-.86 1.02-1.53 1.02-1.53s-.37-.67-.37-1.41c0-.89.47-1.89 1.59-1.89.53 0 .89.23 1.1.55.41.65.13 1.51-.12 2.13-.12.3-.62 1.14-.62 1.14s.38.63.59 1.25c.34 1 .32 2.16-.12 3.43-.32.9-.94 1.66-1.39 2.09 0 0 .18.4.19.98.02.8-.4 1.51-.4 1.51s.87-.33 1.49-1.01c.67-.73 1-1.59 1.24-2.57.33-1.32.12-2.67-.29-3.62z" fill="#336791" opacity=".3"/></svg>`,
+  nodejs: `<svg viewBox="0 0 24 24"><path d="M12 1.85c-.27 0-.55.07-.78.2l-7.44 4.3c-.48.28-.78.8-.78 1.36v8.58c0 .56.3 1.08.78 1.36l1.95 1.13c.94.47 1.27.46 1.7.46 1.39 0 2.18-.84 2.18-2.31V8.47c0-.12-.1-.22-.22-.22H8.5c-.12 0-.22.1-.22.22v8.06c0 .65-.68 1.31-1.77.76L4.43 16.1a.26.26 0 0 1-.13-.22V7.3c0-.09.05-.17.13-.22l7.44-4.3a.26.26 0 0 1 .26 0l7.44 4.3c.08.05.13.13.13.22v8.58a.26.26 0 0 1-.13.22l-7.44 4.3a.26.26 0 0 1-.26 0l-1.88-1.11a.2.2 0 0 0-.19-.02c-.52.22-.62.25-1.11.38-.12.03-.3.08.07.24l2.45 1.45c.24.14.51.2.78.2.27 0 .55-.07.78-.2l7.44-4.3c.48-.28.78-.8.78-1.36V7.71c0-.56-.3-1.08-.78-1.36l-7.44-4.3a1.57 1.57 0 0 0-.78-.2z" fill="#539E43"/></svg>`,
+  kubernetes: `<svg viewBox="0 0 24 24"><path d="M12 1L2.5 6v12L12 23l9.5-5V6L12 1zm0 2.18L19.42 7.1v9.8L12 20.82 4.58 16.9V7.1L12 3.18z" fill="#326CE5"/><path d="M12 7a.5.5 0 0 0-.5.5v3.38l-2.93-1.69a.5.5 0 0 0-.5.87L11 11.75v3.38a.5.5 0 0 0 1 0v-3.38l2.93 1.69a.5.5 0 0 0 .5-.87L12.5 10.88V7.5A.5.5 0 0 0 12 7z" fill="#326CE5"/></svg>`,
+  terraform: `<svg viewBox="0 0 24 24"><path d="M1 2.5v7l6 3.5v-7L1 2.5z" fill="#5C4EE5"/><path d="M8.5 6v7l6 3.5v-7L8.5 6z" fill="#5C4EE5"/><path d="M16 2.5v7l6 3.5v-7l-6-3.5z" fill="#5C4EE5" opacity=".5"/><path d="M8.5 17.5v7l6 3.5v-7l-6-3.5z" fill="#5C4EE5" transform="translate(0 -3.5)"/></svg>`,
+  whatsapp: `<svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.28-.14-1.65-.82-1.9-.91-.26-.09-.44-.14-.63.14-.19.28-.72.91-.89 1.1-.16.19-.33.21-.61.07-.28-.14-1.18-.43-2.25-1.39-.83-.74-1.39-1.66-1.55-1.94-.16-.28-.02-.43.12-.57.13-.13.28-.33.42-.5.14-.16.19-.28.28-.47.09-.19.05-.35-.02-.5-.07-.14-.63-1.52-.86-2.08-.23-.55-.46-.47-.63-.48-.16-.01-.35-.01-.54-.01-.19 0-.5.07-.77.35-.26.28-1.01.99-1.01 2.41s1.04 2.8 1.18 2.99c.14.19 2.04 3.12 4.95 4.37.69.3 1.23.47 1.65.61.69.22 1.32.19 1.82.11.56-.08 1.65-.67 1.88-1.32.23-.65.23-1.2.16-1.32-.07-.12-.26-.19-.54-.33zM12.05 21.78a9.68 9.68 0 0 1-4.93-1.35l-.35-.21-3.68.97.98-3.59-.23-.37A9.71 9.71 0 0 1 12.05 2.28c5.37 0 9.73 4.36 9.73 9.72a9.74 9.74 0 0 1-9.73 9.78zM12.05.5C5.61.5.55 5.56.55 12a11.48 11.48 0 0 0 1.54 5.74L.43 23.5l5.93-1.56A11.47 11.47 0 0 0 12.05 23.5C18.49 23.5 23.55 18.44 23.55 12S18.49.5 12.05.5z" fill="#25D366"/></svg>`,
+  looker: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#4285F4" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="#4285F4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="#4285F4" stroke-width="2" stroke-linecap="round"/></svg>`,
+  cloudsec: `<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="none" stroke="#059669" stroke-width="2"/><path d="M10 12l2 2 4-4" stroke="#059669" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  react: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.14" fill="#61DAFB"/><ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1"/><ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="#61DAFB" stroke-width="1" transform="rotate(120 12 12)"/></svg>`,
+  dotnet: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#512BD4"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="9" font-weight="700">.N</text></svg>`,
+  bigquery: `<svg viewBox="0 0 24 24"><path d="M6 4h3v16H6z" fill="#4285F4"/><path d="M11 8h3v12h-3z" fill="#4285F4"/><path d="M16 12h3v8h-3z" fill="#4285F4"/><path d="M3 20h18v2H3z" fill="#4285F4"/></svg>`,
+  /* Social */
+  linkedin: `<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>`,
+  twitter:  `<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>`,
+  youtube:  `<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>`,
+  /* Check */
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
 }
 
 app.get('/', (c) => {
   return c.render(
     <>
-      {/* ══ DECORATIVE ELEMENTS ══ */}
-      <div class="deco-star deco-1" aria-hidden="true">✦</div>
-      <div class="deco-star deco-2" aria-hidden="true">✦</div>
-      <div class="deco-star deco-3" aria-hidden="true">✦</div>
-      <div class="deco-star deco-4" aria-hidden="true">✦</div>
-
-      {/* ══ NAVBAR ══ */}
+      {/* ── NAVBAR ── */}
       <header class="navbar" id="navbar">
         <div class="nav-inner">
           <a href="/" class="nav-logo">
@@ -49,49 +73,46 @@ app.get('/', (c) => {
           <nav class="nav-links" id="navLinks">
             <a href="#servicios">Servicios</a>
             <a href="#ecosistema">Ecosistema</a>
-            <a href="#casos">Casos de éxito</a>
+            <a href="#casos">Casos de Exito</a>
             <a href="#nosotros">Nosotros</a>
             <a href="#faq">FAQ</a>
           </nav>
           <div class="nav-actions">
-            <a href="#contacto" class="btn-nav-outline">Contacto</a>
-            <a href="#contacto" class="btn-nav-fill">Habla con nosotros →</a>
+            <a href="#contacto" class="btn-nav-ghost">Contacto</a>
+            <a href="#contacto" class="btn-nav-fill">Habla con nosotros</a>
           </div>
-          <button class="nav-burger" id="navBurger" aria-label="Menú">
+          <button class="nav-burger" id="navBurger" aria-label="Menu">
             <span></span><span></span><span></span>
           </button>
         </div>
       </header>
 
-      {/* ══ HERO ══ */}
+      {/* ── HERO ── */}
       <section class="hero">
-        <div class="blob blob-hero-1" aria-hidden="true"></div>
-        <div class="blob blob-hero-2" aria-hidden="true"></div>
         <div class="wrap hero-inner">
           <div class="hero-content">
-            <div class="hero-badge"><span class="hbadge-dot"></span>Socio estratégico · +12 años en LATAM</div>
-            <h1 class="hero-h1">Somos la compañía de<br/><span class="grad-text">Transformación Digital</span><br/>más comprometida de LATAM</h1>
-            <p class="hero-sub">En Grupo Consiti impulsamos la innovación y entregamos soluciones de Software, IA y Cloud que ayudan a las organizaciones a escalar y alcanzar sus objetivos.</p>
+            <div class="hero-badge"><span class="badge-dot"></span>Socio estrategico &middot; +12 anos en LATAM</div>
+            <h1 class="hero-h1">Somos la compania de<br/><span class="hero-accent">Transformacion Digital</span><br/>mas comprometida de LATAM</h1>
+            <p class="hero-sub">En Grupo Consiti impulsamos la innovacion y entregamos soluciones de Software, IA y Cloud que ayudan a las organizaciones a escalar y alcanzar sus objetivos.</p>
             <div class="hero-checks">
-              {['Soluciones tecnológicas de vanguardia a su medida','Equipo experto certificado en Software, IA y Cloud','Confianza de organizaciones en toda Latinoamérica'].map((t,i)=>(
-                <div class="hcheck" key={i}><span class="hcheck-icon">✓</span>{t}</div>
+              {['Soluciones tecnologicas de vanguardia a su medida','Equipo experto certificado en Software, IA y Cloud','Confianza de organizaciones en toda Latinoamerica'].map((t,i)=>(
+                <div class="hcheck" key={i}><span class="hcheck-icon" dangerouslySetInnerHTML={{__html: I.check}}/>{t}</div>
               ))}
             </div>
             <div class="hero-ctas">
-              <a href="#contacto" class="btn-primary">Habla con un experto →</a>
-              <a href="#casos" class="btn-outline">Ver casos de éxito</a>
+              <a href="#contacto" class="btn-primary">Habla con un experto <span class="btn-arr">&rarr;</span></a>
+              <a href="#casos" class="btn-outline">Ver casos de exito</a>
             </div>
           </div>
-          {/* Animated counters */}
           <div class="hero-counters">
             {[
-              {emoji:'🚀',target:200,plus:true,label:'Proyectos entregados'},
-              {emoji:'😊',target:120,plus:true,label:'Clientes satisfechos'},
-              {emoji:'📅',target:12,plus:true,label:'Años en la industria'},
-              {emoji:'🌎',target:8,plus:false,label:'Países en LATAM'},
+              {icon:I.rocket, target:200, plus:true, label:'Proyectos entregados'},
+              {icon:I.users,  target:120, plus:true, label:'Clientes satisfechos'},
+              {icon:I.calendar,target:12, plus:true, label:'Anos en la industria'},
+              {icon:I.globe,  target:8,   plus:false,label:'Paises en LATAM'},
             ].map((s,i)=>(
               <div class="hcounter" key={i}>
-                <div class="hc-emoji">{s.emoji}</div>
+                <div class="hc-icon" dangerouslySetInnerHTML={{__html: s.icon}}/>
                 <div class="hc-row">
                   <span class="hc-num" data-target={s.target.toString()}>0</span>
                   {s.plus && <span class="hc-plus">+</span>}
@@ -103,16 +124,37 @@ app.get('/', (c) => {
         </div>
       </section>
 
-      {/* ══ ABOUT ══ */}
+      {/* ── CLIENTS ── */}
+      <section class="section sec-clients">
+        <div class="wrap">
+          <p class="clients-label">Grandes empresas que depositaron toda su confianza en nosotros</p>
+          <div class="clients-row">
+            {[
+              {name:'Banco Hipotecario'},
+              {name:'Davivienda'},
+              {name:'Credisiman'},
+              {name:'Siman'},
+              {name:'Pull&Bear'},
+              {name:'Multi Money'},
+            ].map((cl,i)=>(
+              <div class="client-logo" key={i}>
+                <span class="cl-name">{cl.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── ABOUT ── */}
       <section class="section sec-alt" id="nosotros">
         <div class="wrap grid-2col">
           <div class="reveal">
-            <div class="chip chip-accent">Sobre nosotros</div>
-            <h2 class="sec-h2">Somos la empresa de soluciones IT<br/><span class="grad-text">más comprometida con sus resultados</span></h2>
-            <p class="sec-p mb24">En Grupo Consiti impulsamos la innovación y entregamos soluciones de impacto que ayudan a las organizaciones a escalar y tener éxito. Nuestro compromiso con la excelencia y la tecnología de punta garantiza que su proyecto esté en las mejores manos.</p>
+            <div class="chip">Sobre nosotros</div>
+            <h2 class="sec-h2">Somos la empresa de soluciones IT <span class="hero-accent">mas comprometida con sus resultados</span></h2>
+            <p class="sec-p mb24">En Grupo Consiti impulsamos la innovacion y entregamos soluciones de impacto que ayudan a las organizaciones a escalar. Nuestro compromiso con la excelencia y la tecnologia de punta garantiza que su proyecto este en las mejores manos.</p>
             <div class="about-checks">
-              {['Soluciones tecnológicas de vanguardia adaptadas a sus necesidades','Un equipo de desarrolladores e ingenieros expertos en toda LATAM','Con la confianza de empresas multinacionales en todo el mundo'].map((t,i)=>(
-                <div class="acheck" key={i}><span class="acheck-icon">✓</span><span>{t}</span></div>
+              {['Soluciones tecnologicas de vanguardia adaptadas a sus necesidades','Un equipo de desarrolladores e ingenieros expertos en toda LATAM','Con la confianza de empresas multinacionales en todo el mundo'].map((t,i)=>(
+                <div class="acheck" key={i}><span class="acheck-icon" dangerouslySetInnerHTML={{__html: I.check}}/><span>{t}</span></div>
               ))}
             </div>
           </div>
@@ -120,7 +162,7 @@ app.get('/', (c) => {
             <div class="about-card">
               <div class="ac-head"><img src="/static/logo-dark.png" alt="Grupo Consiti" class="ac-logo" /></div>
               <div class="ac-stats">
-                {[{v:'+200',l:'Proyectos'},{v:'+120',l:'Clientes'},{v:'+12',l:'Años'},{v:'8',l:'Países'}].map((s,i)=>(
+                {[{v:'+200',l:'Proyectos'},{v:'+120',l:'Clientes'},{v:'+12',l:'Anos'},{v:'8',l:'Paises'}].map((s,i)=>(
                   <div class="ac-stat" key={i}><div class="ac-val">{s.v}</div><div class="ac-lbl">{s.l}</div></div>
                 ))}
               </div>
@@ -130,51 +172,54 @@ app.get('/', (c) => {
                 ))}
               </div>
             </div>
-            <div class="about-mini-card">🌎 Presencia en <strong>Colombia, México, Ecuador, Perú, Chile, Panamá, Costa Rica</strong> y más.</div>
+            <div class="about-mini-card">
+              <span class="amc-icon" dangerouslySetInnerHTML={{__html: I.globe}}/>
+              <span>Presencia en <strong>Colombia, Mexico, Ecuador, Peru, Chile, Panama, Costa Rica</strong> y mas.</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ══ SERVICIOS ══ */}
+      {/* ── SERVICIOS ── */}
       <section class="section" id="servicios">
         <div class="wrap">
           <div class="sec-center reveal">
-            <div class="chip chip-accent">Servicios</div>
-            <h2 class="sec-h2">Nuestros servicios dedicados<br/>para <span class="grad-text">cada cliente</span></h2>
+            <div class="chip">Servicios</div>
+            <h2 class="sec-h2">Nuestros servicios dedicados<br/>para <span class="hero-accent">cada cliente</span></h2>
           </div>
           <div class="svc-grid">
             {[
-              {icon:'💻',title:'Desarrollo de Software',desc:'Soluciones a medida que automatizan procesos críticos, integran sistemas y aceleran la operación con tecnología moderna.',accent:'#0b1e3d'},
-              {icon:'🤖',title:'Inteligencia Artificial',desc:'Modelos de IA aplicados a procesos reales: procesamiento de documentos, atención al cliente, predicción de demanda.',accent:'#6366f1'},
-              {icon:'☁️',title:'Cloud & Infraestructura',desc:'Migración, arquitectura y gestión de entornos cloud con Google Cloud y Oracle. Disponibilidad y seguridad garantizadas.',accent:'#0ea5e9'},
-              {icon:'📦',title:'Implementación ERP/CRM',desc:'Despliegue y personalización de Odoo y Salesforce adaptados a los procesos de cada organización.',accent:'#f59e0b'},
-              {icon:'🔗',title:'Integración de Sistemas',desc:'Conectamos plataformas heterogéneas mediante APIs y middleware, eliminando silos de información.',accent:'#ec4899'},
-              {icon:'📊',title:'Analítica & Business Intelligence',desc:'Dashboards ejecutivos, KPIs en tiempo real y modelos predictivos para decisiones estratégicas.',accent:'#059669'},
+              {icon:I.code,  title:'Desarrollo de Software',desc:'Soluciones a medida que automatizan procesos criticos, integran sistemas y aceleran la operacion con tecnologia moderna.'},
+              {icon:I.brain, title:'Inteligencia Artificial',desc:'Modelos de IA aplicados a procesos reales: procesamiento de documentos, atencion al cliente, prediccion de demanda.'},
+              {icon:I.cloud, title:'Cloud & Infraestructura',desc:'Migracion, arquitectura y gestion de entornos cloud con Google Cloud y Oracle. Disponibilidad y seguridad garantizadas.'},
+              {icon:I.box,   title:'Implementacion ERP/CRM',desc:'Despliegue y personalizacion de Odoo y Salesforce adaptados a los procesos de cada organizacion.'},
+              {icon:I.link,  title:'Integracion de Sistemas',desc:'Conectamos plataformas heterogeneas mediante APIs y middleware, eliminando silos de informacion.'},
+              {icon:I.chart, title:'Analitica & Business Intelligence',desc:'Dashboards ejecutivos, KPIs en tiempo real y modelos predictivos para decisiones estrategicas.'},
             ].map((s,i)=>(
               <div class="svc-card reveal" key={i}>
-                <div class="svc-icon">{s.icon}</div>
+                <div class="svc-icon" dangerouslySetInnerHTML={{__html: s.icon}}/>
                 <h3 class="svc-title">{s.title}</h3>
                 <p class="svc-desc">{s.desc}</p>
-                <span class="svc-arrow">→</span>
+                <span class="svc-arrow">&rarr;</span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ ECOSISTEMA ══ */}
+      {/* ── ECOSISTEMA ── */}
       <section class="section sec-alt" id="ecosistema">
         <div class="wrap">
           <div class="sec-center reveal">
-            <div class="chip chip-accent">Alianzas</div>
-            <h2 class="sec-h2">Representamos a las marcas<br/>tecnológicas <span class="grad-text">líderes globales</span></h2>
+            <div class="chip">Alianzas</div>
+            <h2 class="sec-h2">Representamos a las marcas<br/>tecnologicas <span class="hero-accent">lideres globales</span></h2>
           </div>
           <div class="eco-grid">
             {[
-              {name:'Google Cloud',cat:'Partner Premier',count:'+50 clientes',desc:'Infraestructura cloud, BigQuery, Vertex AI y Google Workspace.',icon:ICONS.googleCloud,color:'#4285f4'},
-              {name:'Oracle',cat:'Gold Partner',count:'+30 clientes',desc:'Oracle ERP Cloud, Oracle Database y OCI Infrastructure.',icon:ICONS.oracle,color:'#C74634'},
-              {name:'Odoo',cat:'Certified Partner',count:'+60 clientes',desc:'ERP modular para manufactura, retail, servicios y gobierno.',icon:ICONS.odoo,color:'#714B67'},
-              {name:'Salesforce',cat:'Consulting Partner',count:'+20 clientes',desc:'CRM, Service Cloud, Marketing Cloud y automatización de ventas.',icon:ICONS.salesforce,color:'#00a1e0'},
+              {name:'Google Cloud',cat:'Partner Premier',count:'+50 clientes',desc:'Infraestructura cloud, BigQuery, Vertex AI y Google Workspace.',icon:I.googleCloud,color:'#4285f4'},
+              {name:'Oracle',cat:'Gold Partner',count:'+30 clientes',desc:'Oracle ERP Cloud, Oracle Database y OCI Infrastructure.',icon:I.oracle,color:'#C74634'},
+              {name:'Odoo',cat:'Certified Partner',count:'+60 clientes',desc:'ERP modular para manufactura, retail, servicios y gobierno.',icon:I.odoo,color:'#714B67'},
+              {name:'Salesforce',cat:'Consulting Partner',count:'+20 clientes',desc:'CRM, Service Cloud, Marketing Cloud y automatizacion de ventas.',icon:I.salesforce,color:'#00a1e0'},
             ].map((p,i)=>(
               <div class="eco-card reveal" key={i}>
                 <div class="eco-icon" dangerouslySetInnerHTML={{__html:p.icon}} />
@@ -189,50 +234,50 @@ app.get('/', (c) => {
         </div>
       </section>
 
-      {/* ══ CASOS DE ÉXITO ══ */}
+      {/* ── CASOS DE EXITO ── */}
       <section class="section" id="casos">
         <div class="wrap">
           <div class="sec-center reveal">
-            <div class="chip chip-blue">Casos de éxito</div>
-            <h2 class="sec-h2">Nuestros <span class="grad-text">proyectos destacados</span></h2>
+            <div class="chip chip-dark">Casos de exito</div>
+            <h2 class="sec-h2">Nuestros <span class="hero-accent">proyectos destacados</span></h2>
           </div>
           <div class="cases-grid">
             {[
               {
-                sector:'Sector Público',tag:'ERP · Gobierno',accent:'#0b1e3d',
-                title:'Modernización de gestión tributaria municipal',
-                desc:'Sistema ERP con Odoo para digitalizar recaudo y gestión de impuestos, eliminando procesos manuales y reduciendo tiempos de días a minutos.',
-                results:[{val:'90%',lbl:'Reducción en tiempos'},{val:'3×',lbl:'Incremento en recaudo'},{val:'0',lbl:'Errores en liquidación'}],
-                tech:[{name:'Odoo',svg:ICONS.odoo},{name:'Python',svg:ICONS.python},{name:'PostgreSQL',svg:ICONS.postgresql}],
+                sector:'Sector Publico',tag:'ERP - Gobierno',
+                title:'Modernizacion de gestion tributaria municipal',
+                desc:'Sistema ERP con Odoo para digitalizar recaudo y gestion de impuestos, eliminando procesos manuales y reduciendo tiempos de dias a minutos.',
+                results:[{val:'90%',lbl:'Reduccion en tiempos'},{val:'3x',lbl:'Incremento en recaudo'},{val:'0',lbl:'Errores en liquidacion'}],
+                tech:[{name:'Odoo',svg:I.odoo},{name:'Python',svg:I.python},{name:'PostgreSQL',svg:I.postgresql}],
               },
               {
-                sector:'Industria Manufacturera',tag:'IA · Computer Vision',accent:'#6366f1',
-                title:'Plataforma de trazabilidad con visión artificial',
-                desc:'Visión artificial para control de calidad en línea de producción con alertas en tiempo real y reportes analíticos para gerencia.',
-                results:[{val:'70%',lbl:'Reducción defectos'},{val:'+40%',lbl:'Productividad de línea'},{val:'6ms',lbl:'Detección de fallas'}],
-                tech:[{name:'Google Cloud',svg:ICONS.googleCloud},{name:'TensorFlow',svg:ICONS.tensorflow},{name:'Python',svg:ICONS.python},{name:'BigQuery',svg:ICONS.bigquery}],
+                sector:'Industria Manufacturera',tag:'IA - Computer Vision',
+                title:'Plataforma de trazabilidad con vision artificial',
+                desc:'Vision artificial para control de calidad en linea de produccion con alertas en tiempo real y reportes analiticos para gerencia.',
+                results:[{val:'70%',lbl:'Reduccion defectos'},{val:'+40%',lbl:'Productividad de linea'},{val:'6ms',lbl:'Deteccion de fallas'}],
+                tech:[{name:'Google Cloud',svg:I.googleCloud},{name:'TensorFlow',svg:I.tensorflow},{name:'Python',svg:I.python},{name:'BigQuery',svg:I.bigquery}],
               },
               {
-                sector:'Sector Retail',tag:'CRM · Automatización',accent:'#0ea5e9',
-                title:'CRM y automatización de ventas para retail',
-                desc:'Salesforce con automatización de ventas, integración WhatsApp Business y dashboards para cadena con 15 puntos de venta.',
-                results:[{val:'+35%',lbl:'Conversión de ventas'},{val:'2×',lbl:'Velocidad comercial'},{val:'100%',lbl:'Visibilidad pipeline'}],
-                tech:[{name:'Salesforce',svg:ICONS.salesforce},{name:'WhatsApp',svg:ICONS.whatsapp},{name:'Looker',svg:ICONS.looker}],
+                sector:'Sector Retail',tag:'CRM - Automatizacion',
+                title:'CRM y automatizacion de ventas para retail',
+                desc:'Salesforce con automatizacion de ventas, integracion WhatsApp Business y dashboards para cadena con 15 puntos de venta.',
+                results:[{val:'+35%',lbl:'Conversion de ventas'},{val:'2x',lbl:'Velocidad comercial'},{val:'100%',lbl:'Visibilidad pipeline'}],
+                tech:[{name:'Salesforce',svg:I.salesforce},{name:'WhatsApp',svg:I.whatsapp},{name:'Looker',svg:I.looker}],
               },
               {
-                sector:'Sector Financiero',tag:'Cloud · Seguridad',accent:'#f59e0b',
-                title:'Migración cloud y modernización bancaria',
-                desc:'Migración completa on-premise a Google Cloud para entidad financiera, reduciendo costos y aumentando disponibilidad.',
-                results:[{val:'99.9%',lbl:'Disponibilidad'},{val:'-45%',lbl:'Costos infraestructura'},{val:'10×',lbl:'Velocidad despliegue'}],
-                tech:[{name:'Google Cloud',svg:ICONS.googleCloud},{name:'Kubernetes',svg:ICONS.kubernetes},{name:'Terraform',svg:ICONS.terraform},{name:'Cloud Security',svg:ICONS.cloudsec}],
+                sector:'Sector Financiero',tag:'Cloud - Seguridad',
+                title:'Migracion cloud y modernizacion bancaria',
+                desc:'Migracion completa on-premise a Google Cloud para entidad financiera, reduciendo costos y aumentando disponibilidad.',
+                results:[{val:'99.9%',lbl:'Disponibilidad'},{val:'-45%',lbl:'Costos infraestructura'},{val:'10x',lbl:'Velocidad despliegue'}],
+                tech:[{name:'Google Cloud',svg:I.googleCloud},{name:'Kubernetes',svg:I.kubernetes},{name:'Terraform',svg:I.terraform},{name:'Cloud Security',svg:I.cloudsec}],
               },
             ].map((c,i)=>(
-              <div class="case-card reveal" key={i} style={`--accent:${c.accent}`}>
-                <div class="case-top"><span class="case-sector" style={`color:${c.accent}`}>{c.sector}</span><span class="case-tag">{c.tag}</span></div>
+              <div class="case-card reveal" key={i}>
+                <div class="case-top"><span class="case-sector">{c.sector}</span><span class="case-tag">{c.tag}</span></div>
                 <h3 class="case-title">{c.title}</h3>
                 <p class="case-desc">{c.desc}</p>
                 <div class="case-results">
-                  {c.results.map((r,j)=>(<div class="cr" key={j}><div class="cr-val" style={`color:${c.accent}`}>{r.val}</div><div class="cr-lbl">{r.lbl}</div></div>))}
+                  {c.results.map((r,j)=>(<div class="cr" key={j}><div class="cr-val">{r.val}</div><div class="cr-lbl">{r.lbl}</div></div>))}
                 </div>
                 <div class="case-tech">
                   {c.tech.map((t,j)=>(
@@ -248,66 +293,70 @@ app.get('/', (c) => {
         </div>
       </section>
 
-      {/* ══ METODOLOGÍA ══ */}
+      {/* ── METODOLOGIA ── */}
       <section class="section sec-alt">
         <div class="wrap">
           <div class="sec-center reveal">
-            <div class="chip chip-accent">Metodología</div>
-            <h2 class="sec-h2">Un proceso probado para<br/><span class="grad-text">resultados sostenibles</span></h2>
+            <div class="chip">Metodologia</div>
+            <h2 class="sec-h2">Un proceso probado para<br/><span class="hero-accent">resultados sostenibles</span></h2>
           </div>
           <div class="method-grid">
             {[
-              {n:'01',t:'Diagnóstico',d:'Entendemos a fondo los procesos, sistemas existentes y objetivos del negocio.'},
-              {n:'02',t:'Diseño de solución',d:'Definimos arquitectura tecnológica, roadmap y KPIs de éxito alineados a la estrategia.'},
-              {n:'03',t:'Implementación ágil',d:'Desarrollamos en sprints cortos con entregas parciales para validar en tiempo real.'},
-              {n:'04',t:'Capacitación',d:'Formamos equipos para garantizar adopción correcta y el impacto esperado.'},
-              {n:'05',t:'Soporte continuo',d:'Acompañamos a largo plazo con soporte, evolución y optimización continua.'},
+              {n:'01',icon:I.search, t:'Diagnostico',d:'Entendemos a fondo los procesos, sistemas existentes y objetivos del negocio.'},
+              {n:'02',icon:I.pen,    t:'Diseno de solucion',d:'Definimos arquitectura tecnologica, roadmap y KPIs de exito alineados a la estrategia.'},
+              {n:'03',icon:I.layers, t:'Implementacion agil',d:'Desarrollamos en sprints cortos con entregas parciales para validar en tiempo real.'},
+              {n:'04',icon:I.book,   t:'Capacitacion',d:'Formamos equipos para garantizar adopcion correcta y el impacto esperado.'},
+              {n:'05',icon:I.headset,t:'Soporte continuo',d:'Acompanamos a largo plazo con soporte, evolucion y optimizacion continua.'},
             ].map((s,i)=>(
-              <div class="meth-card reveal" key={i}><div class="meth-num">{s.n}</div><h3 class="meth-title">{s.t}</h3><p class="meth-desc">{s.d}</p></div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══ TESTIMONIOS ══ */}
-      <section class="section">
-        <div class="wrap">
-          <div class="sec-center reveal">
-            <div class="chip chip-accent">Testimonios</div>
-            <h2 class="sec-h2">Lo que dicen <span class="grad-text">nuestros clientes</span></h2>
-          </div>
-          <div class="testi-grid">
-            {[
-              {q:'Grupo Consiti transformó completamente nuestra operación de recaudo. Lo que antes tomaba días, ahora se hace en horas con cero errores.',name:'Carlos Mendoza',role:'Secretario de Hacienda · Municipio de Bucaramanga',av:'CM',col:'#0b1e3d'},
-              {q:'La implementación de IA en nuestra línea de producción superó todas las expectativas. Redujimos defectos en un 70% con visibilidad total.',name:'Laura Ríos',role:'Directora de Operaciones · Industrias LATAM S.A.',av:'LR',col:'#6366f1'},
-              {q:'Con Salesforce implementado por Consiti, nuestro equipo de ventas duplicó su productividad. El acompañamiento post-implementación fue clave.',name:'Andrés Martínez',role:'Gerente Comercial · Cadena Retail Nacional',av:'AM',col:'#0ea5e9'},
-            ].map((t,i)=>(
-              <div class="tcard reveal" key={i}>
-                <div class="tc-stars">★★★★★</div>
-                <p class="tc-q">"{t.q}"</p>
-                <div class="tc-auth"><div class="tc-av" style={`background:${t.col}12;color:${t.col};border-color:${t.col}30`}>{t.av}</div><div><div class="tc-name">{t.name}</div><div class="tc-role">{t.role}</div></div></div>
+              <div class="meth-card reveal" key={i}>
+                <div class="meth-icon" dangerouslySetInnerHTML={{__html:s.icon}}/>
+                <div class="meth-num">{s.n}</div>
+                <h3 class="meth-title">{s.t}</h3>
+                <p class="meth-desc">{s.d}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ══ FAQ ══ */}
+      {/* ── TESTIMONIOS ── */}
+      <section class="section">
+        <div class="wrap">
+          <div class="sec-center reveal">
+            <div class="chip">Testimonios</div>
+            <h2 class="sec-h2">Lo que dicen <span class="hero-accent">nuestros clientes</span></h2>
+          </div>
+          <div class="testi-grid">
+            {[
+              {q:'Grupo Consiti transformo completamente nuestra operacion de recaudo. Lo que antes tomaba dias, ahora se hace en horas con cero errores.',name:'Carlos Mendoza',role:'Secretario de Hacienda - Municipio de Bucaramanga',av:'CM'},
+              {q:'La implementacion de IA en nuestra linea de produccion supero todas las expectativas. Redujimos defectos en un 70% con visibilidad total.',name:'Laura Rios',role:'Directora de Operaciones - Industrias LATAM S.A.',av:'LR'},
+              {q:'Con Salesforce implementado por Consiti, nuestro equipo de ventas duplico su productividad. El acompanamiento post-implementacion fue clave.',name:'Andres Martinez',role:'Gerente Comercial - Cadena Retail Nacional',av:'AM'},
+            ].map((t,i)=>(
+              <div class="tcard reveal" key={i}>
+                <div class="tc-stars">★★★★★</div>
+                <p class="tc-q">"{t.q}"</p>
+                <div class="tc-auth"><div class="tc-av">{t.av}</div><div><div class="tc-name">{t.name}</div><div class="tc-role">{t.role}</div></div></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
       <section class="section sec-alt" id="faq">
         <div class="wrap">
           <div class="sec-center reveal">
-            <div class="chip chip-accent">FAQ</div>
-            <h2 class="sec-h2">Preguntas <span class="grad-text">frecuentes</span></h2>
-            <p class="sec-p">Respuestas a las preguntas más frecuentes sobre nuestros servicios y cómo podemos ayudar a su organización.</p>
+            <div class="chip">FAQ</div>
+            <h2 class="sec-h2">Preguntas <span class="hero-accent">frecuentes</span></h2>
           </div>
           <div class="faq-list">
             {[
-              {q:'¿Qué servicios ofrece Grupo Consiti?',a:'Ofrecemos desarrollo de software a medida, implementación ERP/CRM (Odoo, Salesforce), inteligencia artificial, migración y gestión cloud (Google Cloud, Oracle), integración de sistemas y analítica de datos.'},
-              {q:'¿Cómo puede Grupo Consiti mejorar la eficiencia de mi organización?',a:'A través de optimización de procesos y aplicaciones personalizadas, automatizamos flujos de trabajo, mejoramos la experiencia del cliente y reducimos costos operativos.'},
-              {q:'¿Con qué tecnologías trabajan?',a:'Google Cloud, Oracle OCI, Python, Node.js, React, .NET, Odoo, Salesforce, TensorFlow y más. Adaptamos la stack según las necesidades de cada proyecto.'},
-              {q:'¿Trabajan con organizaciones del sector público?',a:'Sí, tenemos amplia experiencia con entidades públicas: sistemas de gestión tributaria, portales ciudadanos, plataformas de trámites digitales y más.'},
-              {q:'¿En qué países tienen presencia?',a:'Colombia, México, Ecuador, Perú, Chile, Panamá, Costa Rica y otros países de LATAM. Nuestro equipo distribuido atiende proyectos en toda la región.'},
-              {q:'¿Cuál es el tiempo típico de una implementación?',a:'Implementaciones básicas de ERP pueden completarse en 2-4 meses. Proyectos complejos de transformación digital pueden tomar 6-18 meses, siempre con entregas parciales.'},
+              {q:'Que servicios ofrece Grupo Consiti?',a:'Ofrecemos desarrollo de software a medida, implementacion ERP/CRM (Odoo, Salesforce), inteligencia artificial, migracion y gestion cloud (Google Cloud, Oracle), integracion de sistemas y analitica de datos.'},
+              {q:'Como puede Grupo Consiti mejorar la eficiencia de mi organizacion?',a:'A traves de optimizacion de procesos y aplicaciones personalizadas, automatizamos flujos de trabajo, mejoramos la experiencia del cliente y reducimos costos operativos.'},
+              {q:'Con que tecnologias trabajan?',a:'Google Cloud, Oracle OCI, Python, Node.js, React, .NET, Odoo, Salesforce, TensorFlow y mas. Adaptamos la stack segun las necesidades de cada proyecto.'},
+              {q:'Trabajan con organizaciones del sector publico?',a:'Si, tenemos amplia experiencia con entidades publicas: sistemas de gestion tributaria, portales ciudadanos, plataformas de tramites digitales y mas.'},
+              {q:'En que paises tienen presencia?',a:'Colombia, Mexico, Ecuador, Peru, Chile, Panama, Costa Rica y otros paises de LATAM. Nuestro equipo distribuido atiende proyectos en toda la region.'},
+              {q:'Cual es el tiempo tipico de una implementacion?',a:'Implementaciones basicas de ERP pueden completarse en 2-4 meses. Proyectos complejos de transformacion digital pueden tomar 6-18 meses, siempre con entregas parciales.'},
             ].map((f,i)=>(
               <div class="faq-item reveal" key={i} id={`faq-${i}`}>
                 <button class="faq-q" onclick={`toggleFaq(${i})`} aria-expanded="false"><span>{f.q}</span><span class="faq-icon">+</span></button>
@@ -318,64 +367,63 @@ app.get('/', (c) => {
         </div>
       </section>
 
-      {/* ══ CONTACTO ══ */}
+      {/* ── CONTACTO ── */}
       <section class="section sec-cta" id="contacto">
-        <div class="blob blob-cta" aria-hidden="true"></div>
         <div class="wrap grid-2col">
           <div class="reveal">
-            <div class="chip chip-white">Comencemos</div>
-            <h2 class="sec-h2 white">¿Listo para transformar<br/><span class="grad-text-light">su organización?</span></h2>
-            <p class="sec-p light mb32">Cuéntenos su desafío. Nuestro equipo de expertos diseñará una hoja de ruta personalizada para su transformación digital.</p>
+            <div class="chip chip-light">Comencemos</div>
+            <h2 class="sec-h2 white">Listo para transformar<br/><span class="accent-light">su organizacion?</span></h2>
+            <p class="sec-p light mb32">Cuentenos su desafio. Nuestro equipo de expertos disenara una hoja de ruta personalizada para su transformacion digital.</p>
             <div class="cta-items">
               {[
-                {i:'⚡',t:'Respuesta rápida',d:'Menos de 24 horas hábiles'},
-                {i:'🔒',t:'Sin costo inicial',d:'Primera consulta gratuita'},
-                {i:'🎯',t:'A su medida',d:'Propuesta personalizada'},
-                {i:'🌎',t:'Cobertura LATAM',d:'Atención en 8 países'},
+                {icon:I.zap,    t:'Respuesta rapida',  d:'Menos de 24 horas habiles'},
+                {icon:I.shield, t:'Sin costo inicial',  d:'Primera consulta gratuita'},
+                {icon:I.target, t:'A su medida',        d:'Propuesta personalizada'},
+                {icon:I.mappin, t:'Cobertura LATAM',    d:'Atencion en 8 paises'},
               ].map((x,i)=>(
-                <div class="cta-row" key={i}><div class="cta-icon">{x.i}</div><div><div class="cta-t">{x.t}</div><div class="cta-d">{x.d}</div></div></div>
+                <div class="cta-row" key={i}><div class="cta-icon" dangerouslySetInnerHTML={{__html:x.icon}}/><div><div class="cta-t">{x.t}</div><div class="cta-d">{x.d}</div></div></div>
               ))}
             </div>
           </div>
           <div class="reveal">
             <form class="cform" id="contactForm">
               <h3 class="cform-h">Solicite una consulta gratuita</h3>
-              <div class="frow2"><div class="fgroup"><label class="flabel">Nombre completo</label><input type="text" class="finput" placeholder="Ej: Juan García" required /></div><div class="fgroup"><label class="flabel">Empresa</label><input type="text" class="finput" placeholder="Su organización" required /></div></div>
-              <div class="fgroup"><label class="flabel">Correo electrónico</label><input type="email" class="finput" placeholder="correo@empresa.com" required /></div>
-              <div class="fgroup"><label class="flabel">Teléfono / WhatsApp</label><input type="tel" class="finput" placeholder="+57 300 000 0000" /></div>
-              <div class="fgroup"><label class="flabel">Principal desafío</label><select class="finput fselect"><option value="">Seleccione una opción</option><option>Automatización de procesos</option><option>Implementación ERP/CRM</option><option>Migración a la nube</option><option>IA / Data</option><option>Integración de sistemas</option><option>Otro</option></select></div>
-              <div class="fgroup"><label class="flabel">Mensaje (opcional)</label><textarea class="finput ftarea" placeholder="Cuéntenos más..." rows={3}></textarea></div>
-              <button type="submit" class="btn-submit">Enviar solicitud →</button>
-              <p class="fnote">Al enviar, acepta nuestra <a href="#privacidad" id="privacidad">política de privacidad</a>.</p>
+              <div class="frow2"><div class="fgroup"><label class="flabel">Nombre completo</label><input type="text" class="finput" placeholder="Ej: Juan Garcia" required /></div><div class="fgroup"><label class="flabel">Empresa</label><input type="text" class="finput" placeholder="Su organizacion" required /></div></div>
+              <div class="fgroup"><label class="flabel">Correo electronico</label><input type="email" class="finput" placeholder="correo@empresa.com" required /></div>
+              <div class="fgroup"><label class="flabel">Telefono / WhatsApp</label><input type="tel" class="finput" placeholder="+57 300 000 0000" /></div>
+              <div class="fgroup"><label class="flabel">Principal desafio</label><select class="finput fselect"><option value="">Seleccione una opcion</option><option>Automatizacion de procesos</option><option>Implementacion ERP/CRM</option><option>Migracion a la nube</option><option>IA / Data</option><option>Integracion de sistemas</option><option>Otro</option></select></div>
+              <div class="fgroup"><label class="flabel">Mensaje (opcional)</label><textarea class="finput ftarea" placeholder="Cuentenos mas..." rows={3}></textarea></div>
+              <button type="submit" class="btn-submit">Enviar solicitud <span class="btn-arr">&rarr;</span></button>
+              <p class="fnote">Al enviar, acepta nuestra <a href="#privacidad" id="privacidad">politica de privacidad</a>.</p>
             </form>
           </div>
         </div>
       </section>
 
-      {/* ══ FOOTER ══ */}
+      {/* ── FOOTER ── */}
       <footer class="footer">
         <div class="wrap">
           <div class="ft-top">
-            <div class="ft-brand"><img src="/static/logo-dark.png" alt="Grupo Consiti" class="ft-logo" /><p class="ft-tag">Transformación digital con Software,<br/>Inteligencia Artificial y Cloud<br/>en toda Latinoamérica.</p>
+            <div class="ft-brand"><img src="/static/logo-dark.png" alt="Grupo Consiti" class="ft-logo" /><p class="ft-tag">Transformacion digital con Software,<br/>Inteligencia Artificial y Cloud<br/>en toda Latinoamerica.</p>
               <div class="ft-social">
                 {[
-                  {label:'LinkedIn',svg:'<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.124 2.062 2.062 0 0 1 0 4.124zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>'},
-                  {label:'Twitter/X',svg:'<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>'},
-                  {label:'YouTube',svg:'<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>'},
+                  {label:'LinkedIn',svg:I.linkedin},
+                  {label:'Twitter/X',svg:I.twitter},
+                  {label:'YouTube',svg:I.youtube},
                 ].map((s,i)=>(<a href="#" class="ft-soc" key={i} aria-label={s.label}><span dangerouslySetInnerHTML={{__html:`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">${s.svg}</svg>`}}/></a>))}
               </div>
             </div>
             <div class="ft-cols">
-              <div class="ft-col"><div class="ft-col-h">Servicios</div><ul><li><a href="#servicios">Desarrollo de Software</a></li><li><a href="#servicios">Inteligencia Artificial</a></li><li><a href="#servicios">Cloud & Infraestructura</a></li><li><a href="#servicios">Implementación ERP</a></li><li><a href="#servicios">Analítica & BI</a></li></ul></div>
-              <div class="ft-col"><div class="ft-col-h">Empresa</div><ul><li><a href="#nosotros">Sobre nosotros</a></li><li><a href="#casos">Casos de éxito</a></li><li><a href="#ecosistema">Ecosistema</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contacto">Blog</a></li></ul></div>
-              <div class="ft-col"><div class="ft-col-h">Contacto</div><ul><li><a href="mailto:info@consiti.co">info@consiti.co</a></li><li><a href="tel:+573000000000">+57 300 000 0000</a></li><li><a href="#contacto">Bogotá, Colombia</a></li><li><a href="#contacto">Solicitar demo</a></li></ul></div>
+              <div class="ft-col"><div class="ft-col-h">Servicios</div><ul><li><a href="#servicios">Desarrollo de Software</a></li><li><a href="#servicios">Inteligencia Artificial</a></li><li><a href="#servicios">Cloud & Infraestructura</a></li><li><a href="#servicios">Implementacion ERP</a></li><li><a href="#servicios">Analitica & BI</a></li></ul></div>
+              <div class="ft-col"><div class="ft-col-h">Empresa</div><ul><li><a href="#nosotros">Sobre nosotros</a></li><li><a href="#casos">Casos de exito</a></li><li><a href="#ecosistema">Ecosistema</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contacto">Blog</a></li></ul></div>
+              <div class="ft-col"><div class="ft-col-h">Contacto</div><ul><li><a href="mailto:info@consiti.com">info@consiti.com</a></li><li><a href="tel:+573000000000">+57 300 000 0000</a></li><li><a href="#contacto">Bogota, Colombia</a></li><li><a href="#contacto">Solicitar demo</a></li></ul></div>
             </div>
           </div>
-          <div class="ft-bottom"><span>© 2025 Grupo Consiti. Todos los derechos reservados.</span><div class="ft-legal"><a href="#privacidad">Política de privacidad</a><a href="#">Términos de uso</a></div></div>
+          <div class="ft-bottom"><span>&copy; 2025 Grupo Consiti. Todos los derechos reservados.</span><div class="ft-legal"><a href="#privacidad">Politica de privacidad</a><a href="#">Terminos de uso</a></div></div>
         </div>
       </footer>
 
-      {/* ══ SCRIPTS ══ */}
+      {/* ── SCRIPTS ── */}
       <script dangerouslySetInnerHTML={{__html:`
         const nb=document.getElementById('navbar');
         window.addEventListener('scroll',()=>{nb.classList.toggle('scrolled',window.scrollY>50)},{passive:true});
@@ -390,8 +438,8 @@ app.get('/', (c) => {
         window.toggleFaq=function(i){const b=document.querySelector('#faq-'+i+' .faq-q'),a=document.getElementById('faq-a-'+i),o=b.getAttribute('aria-expanded')==='true';
         document.querySelectorAll('.faq-q').forEach(x=>{x.setAttribute('aria-expanded','false');x.querySelector('.faq-icon').textContent='+'});
         document.querySelectorAll('.faq-a').forEach(x=>x.classList.remove('open'));
-        if(!o){b.setAttribute('aria-expanded','true');b.querySelector('.faq-icon').textContent='−';a.classList.add('open')}};
-        const fm=document.getElementById('contactForm');if(fm)fm.addEventListener('submit',e=>{e.preventDefault();const b=fm.querySelector('.btn-submit');b.textContent='✓ Solicitud enviada';b.style.background='#059669';b.disabled=true});
+        if(!o){b.setAttribute('aria-expanded','true');b.querySelector('.faq-icon').textContent=String.fromCharCode(8722);a.classList.add('open')}};
+        const fm=document.getElementById('contactForm');if(fm)fm.addEventListener('submit',e=>{e.preventDefault();const b=fm.querySelector('.btn-submit');b.innerHTML='\\u2713 Solicitud enviada';b.style.background='#059669';b.disabled=true});
       `}}/>
     </>
   )
