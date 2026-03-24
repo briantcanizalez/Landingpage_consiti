@@ -68,7 +68,7 @@ app.get('/', (c) => {
       <header class="navbar" id="navbar">
         <div class="nav-inner">
           <a href="/" class="nav-logo">
-            <img src="/static/logo-dark.png" alt="Grupo Consiti" class="nav-logo-img" />
+            <img src="/static/icon-dark.png" alt="Grupo Consiti" class="nav-iso" />
           </a>
           <nav class="nav-links" id="navLinks">
             <a href="#servicios">Servicios</a>
@@ -130,15 +130,15 @@ app.get('/', (c) => {
           <p class="clients-label">Grandes empresas que depositaron toda su confianza en nosotros</p>
           <div class="clients-row">
             {[
-              {name:'Banco Hipotecario'},
-              {name:'Davivienda'},
-              {name:'Credisiman'},
-              {name:'Siman'},
-              {name:'Pull&Bear'},
-              {name:'Multi Money'},
+              {name:'Banco Hipotecario', file:'banco-hipotecario.png'},
+              {name:'Davivienda',         file:'davivienda.png'},
+              {name:'Credisiman',         file:'credisiman.png'},
+              {name:'Siman',              file:'siman.png'},
+              {name:'Pull&Bear',          file:'pullbear.png'},
+              {name:'Multi Money',        file:'multimoney.png'},
             ].map((cl,i)=>(
               <div class="client-logo" key={i}>
-                <span class="cl-name">{cl.name}</span>
+                <img src={`/static/clients/${cl.file}`} alt={cl.name} class="cl-img" />
               </div>
             ))}
           </div>
@@ -160,7 +160,7 @@ app.get('/', (c) => {
           </div>
           <div class="reveal about-card-wrap">
             <div class="about-card">
-              <div class="ac-head"><img src="/static/logo-dark.png" alt="Grupo Consiti" class="ac-logo" /></div>
+              <div class="ac-head"><img src="/static/icon-dark.png" alt="Grupo Consiti" class="ac-iso" /></div>
               <div class="ac-stats">
                 {[{v:'+200',l:'Proyectos'},{v:'+120',l:'Clientes'},{v:'+12',l:'Anos'},{v:'8',l:'Paises'}].map((s,i)=>(
                   <div class="ac-stat" key={i}><div class="ac-val">{s.v}</div><div class="ac-lbl">{s.l}</div></div>
@@ -404,7 +404,7 @@ app.get('/', (c) => {
       <footer class="footer">
         <div class="wrap">
           <div class="ft-top">
-            <div class="ft-brand"><img src="/static/logo-dark.png" alt="Grupo Consiti" class="ft-logo" /><p class="ft-tag">Transformacion digital con Software,<br/>Inteligencia Artificial y Cloud<br/>en toda Latinoamerica.</p>
+            <div class="ft-brand"><img src="/static/icon-dark.png" alt="Grupo Consiti" class="ft-iso" /><p class="ft-tag">Transformacion digital con Software,<br/>Inteligencia Artificial y Cloud<br/>en toda Latinoamerica.</p>
               <div class="ft-social">
                 {[
                   {label:'LinkedIn',svg:I.linkedin},
