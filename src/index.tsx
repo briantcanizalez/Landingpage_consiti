@@ -4,835 +4,662 @@ import { renderer } from './renderer'
 const app = new Hono()
 app.use(renderer)
 
-// Serve favicon
+// Favicon
 app.get('/favicon.svg', (c) => {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="url(#g)"/><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1565c0"/><stop offset="100%" stop-color="#00b4d8"/></linearGradient></defs><text x="9" y="23" font-family="Arial" font-weight="900" font-size="20" font-style="italic" fill="white">C</text></svg>`
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0b1e3d"/><path d="M9 10 L15 16 L9 22 M16 10 L22 16 L16 22" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`
   return c.body(svg, 200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' })
 })
-
 app.get('/favicon.ico', (c) => c.redirect('/favicon.svg', 301))
 
 app.get('/', (c) => {
   return c.render(
     <>
-      {/* ══════════════════════════════════════════
-          NAVBAR
-      ══════════════════════════════════════════ */}
-      <nav class="navbar" id="navbar">
-        <div class="container nav-inner">
-          <a href="/" class="logo">
-            <div class="logo-mark">
-              <span class="lm-c">C</span>
-            </div>
-            <div class="logo-words">
-              <span class="lw-grupo">Grupo</span>
-              <span class="lw-consiti">Consiti</span>
-            </div>
+      {/* ══ NAVBAR ══ */}
+      <header class="navbar" id="navbar">
+        <div class="nav-inner">
+          <a href="/" class="nav-logo">
+            <img src="/static/logo-dark.png" alt="Grupo Consiti" class="nav-logo-img" />
           </a>
-          <ul class="nav-links" id="navLinks">
-            <li><a href="#servicios">Servicios</a></li>
-            <li><a href="#ecosistema">Ecosistema</a></li>
-            <li><a href="#casos">Casos de Éxito</a></li>
-            <li><a href="#metodologia">Metodología</a></li>
-            <li><a href="#contacto" class="btn btn-cta-nav">Contáctanos</a></li>
-          </ul>
+          <nav class="nav-links" id="navLinks">
+            <a href="#servicios">Servicios</a>
+            <a href="#ecosistema">Ecosistema</a>
+            <a href="#casos">Casos de éxito</a>
+            <a href="#nosotros">Nosotros</a>
+          </nav>
+          <div class="nav-actions">
+            <a href="#contacto" class="btn-ghost">Contacto</a>
+            <a href="#contacto" class="btn-primary-sm">Habla con nosotros</a>
+          </div>
           <button class="nav-burger" id="navBurger" aria-label="Menú">
             <span></span><span></span><span></span>
           </button>
         </div>
-      </nav>
+      </header>
 
-      {/* ══════════════════════════════════════════
-          HERO
-      ══════════════════════════════════════════ */}
-      <section class="hero" id="hero">
-        <div class="hero-mesh"></div>
-        <div class="hero-glow glow-1"></div>
-        <div class="hero-glow glow-2"></div>
-        <div class="container hero-body">
-          <div class="hero-text">
-            <div class="hero-chip">
-              <i class="fas fa-circle chip-dot"></i>
-              Socio estratégico en Latinoamérica
-            </div>
-            <h1 class="hero-title">
-              Transformación digital con
-              <span class="hero-highlight">
-                <span class="hl-word">Software</span>
-                <span class="hl-sep">,</span>
-                <span class="hl-word cyan">IA</span>
-                <span class="hl-sep"> y </span>
-                <span class="hl-word blue">Cloud</span>
-              </span>
-            </h1>
-            <p class="hero-desc">
-              Acompañamos a organizaciones públicas y privadas en su modernización tecnológica, generando eficiencia operativa y valor de negocio — <strong>sin disrupciones</strong>.
-            </p>
-            <div class="hero-btns">
-              <a href="#contacto" class="btn btn-primary">
-                <i class="fas fa-rocket"></i> Habla con un experto
-              </a>
-              <a href="#casos" class="btn btn-outline-hero">
-                <i class="fas fa-play-circle"></i> Ver casos de éxito
-              </a>
-            </div>
-            <div class="hero-partners">
-              <span class="hp-label">Partners certificados</span>
-              <div class="hp-badges">
-                <div class="hp-badge gcp"><i class="fab fa-google"></i> Google Cloud</div>
-                <div class="hp-badge oracle"><i class="fas fa-database"></i> Oracle</div>
-                <div class="hp-badge odoo"><i class="fas fa-cubes"></i> Odoo</div>
-              </div>
-            </div>
+      {/* ══ HERO ══ */}
+      <section class="hero">
+        <div class="wrap">
+          <div class="hero-badge">
+            <span class="badge-dot"></span>
+            Socio estratégico en Latinoamérica · +12 años de experiencia
           </div>
-          <div class="hero-visual">
-            <div class="hv-card hv-main">
-              <div class="hvc-header">
-                <div class="hvc-dots"><span></span><span></span><span></span></div>
-                <span class="hvc-title">Dashboard de Transformación</span>
-                <span class="hvc-live"><i class="fas fa-circle"></i> En vivo</span>
+          <h1 class="hero-h1">
+            Transformación digital<br />
+            que genera <span class="text-accent">resultados reales</span>
+          </h1>
+          <p class="hero-sub">
+            Acompañamos a organizaciones públicas y privadas en su modernización tecnológica
+            con Software, Inteligencia Artificial y Cloud — generando eficiencia operativa y
+            valor tangible para el negocio.
+          </p>
+          <div class="hero-ctas">
+            <a href="#contacto" class="btn-primary-lg">
+              Habla con un experto
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M3.75 9h10.5M9 3.75L14.25 9 9 14.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href="#casos" class="btn-outline-lg">Ver casos de éxito</a>
+          </div>
+          <div class="hero-partners">
+            <span class="hp-label">Partners certificados</span>
+            <div class="hp-logos">
+              <div class="hp-logo">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                Google Cloud
               </div>
-              <div class="hvc-body">
-                <div class="hvc-kpis">
-                  <div class="hvc-kpi">
-                    <span class="kpi-n blue">90%</span>
-                    <span class="kpi-l">Reducción de tiempos</span>
-                  </div>
-                  <div class="hvc-kpi">
-                    <span class="kpi-n cyan">70%</span>
-                    <span class="kpi-l">Menos errores humanos</span>
-                  </div>
-                  <div class="hvc-kpi">
-                    <span class="kpi-n green">3x</span>
-                    <span class="kpi-l">Velocidad operativa</span>
-                  </div>
-                </div>
-                <div class="hvc-chart">
-                  <div class="hvc-bar-wrap">
-                    <div class="hvc-bar" style="height:40%"><span>Q1</span></div>
-                    <div class="hvc-bar" style="height:55%"><span>Q2</span></div>
-                    <div class="hvc-bar" style="height:68%"><span>Q3</span></div>
-                    <div class="hvc-bar" style="height:82%"><span>Q4</span></div>
-                    <div class="hvc-bar active" style="height:95%"><span>Q5</span></div>
-                  </div>
-                  <span class="hvc-chart-label">Proyectos completados por trimestre</span>
-                </div>
-                <div class="hvc-tags">
-                  <span class="tag ai"><i class="fas fa-brain"></i> Gemini 2.5</span>
-                  <span class="tag cloud"><i class="fab fa-google"></i> Vertex AI</span>
-                  <span class="tag erp"><i class="fas fa-cubes"></i> Odoo ERP</span>
-                  <span class="tag oracle"><i class="fas fa-database"></i> Oracle</span>
-                </div>
+              <div class="hp-sep"></div>
+              <div class="hp-logo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#f80000"><ellipse cx="12" cy="12" rx="10" ry="10"/><text x="12" y="16" text-anchor="middle" fill="white" font-size="10" font-weight="bold">O</text></svg>
+                Oracle
               </div>
-            </div>
-            <div class="hv-float float-1">
-              <i class="fas fa-shield-alt"></i>
-              <span>Seguridad Enterprise</span>
-            </div>
-            <div class="hv-float float-2">
-              <i class="fas fa-bolt"></i>
-              <span>Integración API</span>
+              <div class="hp-sep"></div>
+              <div class="hp-logo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#714B67"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>
+                Odoo
+              </div>
+              <div class="hp-sep"></div>
+              <div class="hp-logo">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#00a1e0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Salesforce
+              </div>
             </div>
           </div>
         </div>
-        <div class="hero-wave">
-          <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f0f4ff"/>
-          </svg>
+
+        {/* Dashboard mockup */}
+        <div class="hero-visual">
+          <div class="dashboard-card">
+            <div class="dash-header">
+              <div class="dash-dots">
+                <span class="dot-red"></span>
+                <span class="dot-yellow"></span>
+                <span class="dot-green"></span>
+              </div>
+              <span class="dash-title">Panel de Control · Consiti Analytics</span>
+              <span class="dash-live"><span class="live-dot"></span>En vivo</span>
+            </div>
+            <div class="dash-body">
+              <div class="dash-kpis">
+                <div class="dash-kpi">
+                  <div class="kpi-val navy">90%</div>
+                  <div class="kpi-lbl">Reducción tiempos</div>
+                  <div class="kpi-change green">↑ 12%</div>
+                </div>
+                <div class="dash-kpi">
+                  <div class="kpi-val blue">70%</div>
+                  <div class="kpi-lbl">Menos errores</div>
+                  <div class="kpi-change green">↑ 8%</div>
+                </div>
+                <div class="dash-kpi">
+                  <div class="kpi-val teal">3×</div>
+                  <div class="kpi-lbl">Velocidad operativa</div>
+                  <div class="kpi-change green">↑ 2×</div>
+                </div>
+              </div>
+              <div class="dash-chart-area">
+                <div class="chart-label">Eficiencia operativa</div>
+                <div class="bars">
+                  {[55, 68, 72, 80, 88, 92, 90].map((h, i) => (
+                    <div class="bar-wrap" key={i}>
+                      <div class="bar" style={`height:${h}%;animation-delay:${i * 0.08}s`}></div>
+                      <div class="bar-lbl">{['Ene','Feb','Mar','Abr','May','Jun','Jul'][i]}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div class="dash-alerts">
+                <div class="alert-item ok">
+                  <span class="alert-icon">✓</span>
+                  Migración cloud completada
+                </div>
+                <div class="alert-item warn">
+                  <span class="alert-icon">◉</span>
+                  Proceso de facturación optimizado
+                </div>
+                <div class="alert-item ok">
+                  <span class="alert-icon">✓</span>
+                  IA integrada en atención al cliente
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating metric card */}
+          <div class="float-card float-left">
+            <div class="float-icon">📈</div>
+            <div>
+              <div class="float-val">+200</div>
+              <div class="float-lbl">Proyectos entregados</div>
+            </div>
+          </div>
+          <div class="float-card float-right">
+            <div class="float-icon">🌎</div>
+            <div>
+              <div class="float-val">8</div>
+              <div class="float-lbl">Países en LATAM</div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          STATS BAR
-      ══════════════════════════════════════════ */}
+      {/* ══ STATS BAR ══ */}
       <section class="stats-bar">
-        <div class="container stats-grid">
-          <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
-            <div class="stat-info">
-              <span class="stat-num">+12</span>
-              <span class="stat-lbl">Años de experiencia en LATAM</span>
+        <div class="wrap stats-inner">
+          {[
+            { val: '+200', lbl: 'Proyectos entregados' },
+            { val: '8', lbl: 'Países en LATAM' },
+            { val: '+12', lbl: 'Años de experiencia' },
+            { val: '97%', lbl: 'Satisfacción de clientes' },
+          ].map((s, i) => (
+            <div class="stat-item" key={i}>
+              <div class="stat-val">{s.val}</div>
+              <div class="stat-lbl">{s.lbl}</div>
             </div>
-          </div>
-          <div class="stat-sep"></div>
-          <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-check-double"></i></div>
-            <div class="stat-info">
-              <span class="stat-num">+150</span>
-              <span class="stat-lbl">Proyectos entregados</span>
-            </div>
-          </div>
-          <div class="stat-sep"></div>
-          <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-building"></i></div>
-            <div class="stat-info">
-              <span class="stat-num">+300</span>
-              <span class="stat-lbl">Clientes activos</span>
-            </div>
-          </div>
-          <div class="stat-sep"></div>
-          <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-users"></i></div>
-            <div class="stat-info">
-              <span class="stat-num">+500</span>
-              <span class="stat-lbl">Empleos generados</span>
-            </div>
-          </div>
-          <div class="stat-sep"></div>
-          <div class="stat-item">
-            <div class="stat-icon"><i class="fas fa-brain"></i></div>
-            <div class="stat-info">
-              <span class="stat-num">+10</span>
-              <span class="stat-lbl">Iniciativas de IA exitosas</span>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          SOBRE NOSOTROS
-      ══════════════════════════════════════════ */}
-      <section class="about" id="sobre">
-        <div class="container about-inner">
-          <div class="about-text">
-            <div class="section-tag">¿Quiénes somos?</div>
-            <h2 class="section-title">Modernización tecnológica <br /><span class="gradient-text">sin disrupciones</span></h2>
-            <p class="section-desc">Somos un socio estratégico que combina experiencia en ERP, nube e inteligencia artificial para llevar a las organizaciones al siguiente nivel — respetando sus sistemas actuales y garantizando continuidad operativa.</p>
-            <div class="about-props">
-              <div class="ap-item">
-                <div class="ap-icon"><i class="fas fa-bridge"></i></div>
-                <div>
-                  <strong>Puente Oracle–Cloud</strong>
-                  <p>Migramos y conectamos sistemas legados con la nube de forma gradual y segura.</p>
-                </div>
-              </div>
-              <div class="ap-item">
-                <div class="ap-icon"><i class="fas fa-robot"></i></div>
-                <div>
-                  <strong>IA Transaccional Real</strong>
-                  <p>Agentes inteligentes que razonan, deciden e integran ERP/CRM — no simples chatbots.</p>
-                </div>
-              </div>
-              <div class="ap-item">
-                <div class="ap-icon"><i class="fas fa-layer-group"></i></div>
-                <div>
-                  <strong>ERP a la medida</strong>
-                  <p>Implementamos Odoo Enterprise con +80 módulos adaptados a cada industria.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="about-visual">
-            <div class="av-ring ring-outer"></div>
-            <div class="av-ring ring-mid"></div>
-            <div class="av-core">
-              <i class="fas fa-microchip"></i>
-              <span>Consiti<br/>Core AI</span>
-            </div>
-            <div class="av-orbit orb-1"><i class="fab fa-google"></i></div>
-            <div class="av-orbit orb-2"><i class="fas fa-database"></i></div>
-            <div class="av-orbit orb-3"><i class="fas fa-cubes"></i></div>
-            <div class="av-orbit orb-4"><i class="fas fa-cloud"></i></div>
-            <div class="av-orbit orb-5"><i class="fas fa-cogs"></i></div>
-            <div class="av-orbit orb-6"><i class="fas fa-file-invoice"></i></div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          SERVICIOS
-      ══════════════════════════════════════════ */}
-      <section class="servicios" id="servicios">
-        <div class="container">
-          <div class="section-header">
-            <div class="section-tag">Servicios</div>
-            <h2 class="section-title">Soluciones tecnológicas <span class="gradient-text">a la medida</span></h2>
-            <p class="section-sub">Cubrimos el ciclo completo de la transformación digital, desde la consultoría hasta la operación continua.</p>
+      {/* ══ SERVICIOS ══ */}
+      <section class="section" id="servicios">
+        <div class="wrap">
+          <div class="sec-header">
+            <div class="chip">Servicios</div>
+            <h2 class="sec-h2">Todo lo que necesita para <span class="text-accent">transformar su organización</span></h2>
+            <p class="sec-p">Desde la estrategia hasta la implementación, acompañamos cada etapa del camino hacia la modernización digital.</p>
           </div>
           <div class="services-grid">
-
-            <div class="svc-card">
-              <div class="svc-icon blue"><i class="fas fa-brain"></i></div>
-              <div class="svc-badge new">Destacado</div>
-              <h3>Consiti Agent Core</h3>
-              <p>Desarrollo de agentes inteligentes transaccionales con capacidad de razonamiento e integración nativa a ERP y CRM. Potenciado por Gemini 2.5 PRO y Vertex AI.</p>
-              <ul class="svc-list">
-                <li><i class="fas fa-check"></i> Automatización de pedidos</li>
-                <li><i class="fas fa-check"></i> Gestión de inventarios</li>
-                <li><i class="fas fa-check"></i> Conciliación automática</li>
-              </ul>
-              <a href="#contacto" class="svc-link">Conocer más <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="svc-card">
-              <div class="svc-icon cyan"><i class="fab fa-google"></i></div>
-              <h3>Google Cloud Platform</h3>
-              <p>Administración, migración y arquitectura en GCP. Especialistas certificados en Vertex AI, Document AI, Gemini y Agent Builder para soluciones empresariales.</p>
-              <ul class="svc-list">
-                <li><i class="fas fa-check"></i> Vertex AI & Document AI</li>
-                <li><i class="fas fa-check"></i> Agent Builder</li>
-                <li><i class="fas fa-check"></i> Migración y CloudOps</li>
-              </ul>
-              <a href="#contacto" class="svc-link">Conocer más <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="svc-card">
-              <div class="svc-icon orange"><i class="fas fa-database"></i></div>
-              <h3>Oracle E-Business Suite</h3>
-              <p>Soporte y desarrollo especializado en Oracle EBS R11/R12, Forms & Reports, PL-SQL y BI-Publisher. El puente entre tu legado y la modernización.</p>
-              <ul class="svc-list">
-                <li><i class="fas fa-check"></i> Oracle R11 / R12</li>
-                <li><i class="fas fa-check"></i> PL-SQL & BI-Publisher</li>
-                <li><i class="fas fa-check"></i> Migraciones a Cloud</li>
-              </ul>
-              <a href="#contacto" class="svc-link">Conocer más <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="svc-card">
-              <div class="svc-icon purple"><i class="fas fa-cubes"></i></div>
-              <h3>Odoo ERP Enterprise</h3>
-              <p>Implementación de Odoo Enterprise con más de 80 módulos disponibles. Solución integral para finanzas, RRHH, ventas, inventario y manufactura.</p>
-              <ul class="svc-list">
-                <li><i class="fas fa-check"></i> +80 módulos disponibles</li>
-                <li><i class="fas fa-check"></i> Personalización total</li>
-                <li><i class="fas fa-check"></i> Soporte continuo</li>
-              </ul>
-              <a href="#contacto" class="svc-link">Conocer más <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="svc-card">
-              <div class="svc-icon teal"><i class="fas fa-code"></i></div>
-              <h3>Desarrollo Full Stack</h3>
-              <p>Equipo completo de ingeniería para proyectos a medida: frontend moderno, backend robusto e integración de sistemas mediante APIs REST y GraphQL.</p>
-              <ul class="svc-list">
-                <li><i class="fas fa-check"></i> Java, Python, React, .NET</li>
-                <li><i class="fas fa-check"></i> Integración de APIs</li>
-                <li><i class="fas fa-check"></i> Arquitectura cloud-native</li>
-              </ul>
-              <a href="#contacto" class="svc-link">Conocer más <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="svc-card">
-              <div class="svc-icon green"><i class="fas fa-file-invoice-dollar"></i></div>
-              <h3>Facturación Electrónica</h3>
-              <p>Plataforma cloud integrada con el Ministerio de Hacienda. Solución lista para PYMEs y grandes empresas, escalable desde 200 hasta +3,000 clientes.</p>
-              <ul class="svc-list">
-                <li><i class="fas fa-check"></i> Integración con Hacienda</li>
-                <li><i class="fas fa-check"></i> Escalable para PYMEs</li>
-                <li><i class="fas fa-check"></i> Operación 24/7</li>
-              </ul>
-              <a href="#contacto" class="svc-link">Conocer más <i class="fas fa-arrow-right"></i></a>
-            </div>
-
+            {[
+              {
+                icon: '💻',
+                title: 'Desarrollo de Software',
+                desc: 'Soluciones a medida que automatizan procesos críticos, integran sistemas legados y aceleran la operación del negocio.',
+                tags: ['ERP', 'CRM', 'APIs', 'Automatización'],
+              },
+              {
+                icon: '🤖',
+                title: 'Inteligencia Artificial',
+                desc: 'Modelos de IA aplicados a procesos reales: procesamiento de documentos, atención al cliente, predicción de demanda y más.',
+                tags: ['Machine Learning', 'NLP', 'Visión Artificial', 'Chatbots'],
+              },
+              {
+                icon: '☁️',
+                title: 'Cloud & Infraestructura',
+                desc: 'Migración, arquitectura y gestión de entornos cloud con Google Cloud y Oracle, asegurando disponibilidad y seguridad.',
+                tags: ['Google Cloud', 'Oracle OCI', 'DevOps', 'Seguridad'],
+              },
+              {
+                icon: '📦',
+                title: 'Implementación ERP/CRM',
+                desc: 'Despliegue y personalización de Odoo y Salesforce adaptados a los procesos específicos de cada organización.',
+                tags: ['Odoo', 'Salesforce', 'Consultoría', 'Capacitación'],
+              },
+              {
+                icon: '🔗',
+                title: 'Integración de Sistemas',
+                desc: 'Conectamos plataformas heterogéneas mediante APIs y middleware, eliminando silos de información y duplicidad de datos.',
+                tags: ['APIs REST', 'Middleware', 'ETL', 'Data Sync'],
+              },
+              {
+                icon: '📊',
+                title: 'Analítica & Business Intelligence',
+                desc: 'Transformamos datos en decisiones: dashboards en tiempo real, KPIs ejecutivos y modelos predictivos para el negocio.',
+                tags: ['Looker', 'Power BI', 'Dashboards', 'Big Data'],
+              },
+            ].map((s, i) => (
+              <div class="service-card reveal" key={i}>
+                <div class="sc-icon">{s.icon}</div>
+                <h3 class="sc-title">{s.title}</h3>
+                <p class="sc-desc">{s.desc}</p>
+                <div class="sc-tags">
+                  {s.tags.map((t, j) => <span class="sc-tag" key={j}>{t}</span>)}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          ECOSISTEMA / PARTNERS
-      ══════════════════════════════════════════ */}
-      <section class="ecosistema" id="ecosistema">
-        <div class="container">
-          <div class="section-header light">
-            <div class="section-tag light">Ecosistema tecnológico</div>
-            <h2 class="section-title light">Partners de primer nivel</h2>
-            <p class="section-sub light">Trabajamos con las plataformas líderes del mercado, con certificaciones que garantizan la máxima calidad en cada proyecto.</p>
+      {/* ══ ECOSISTEMA ══ */}
+      <section class="section bg-subtle" id="ecosistema">
+        <div class="wrap">
+          <div class="sec-header">
+            <div class="chip">Ecosistema tecnológico</div>
+            <h2 class="sec-h2">Alianzas con los líderes <span class="text-accent">tecnológicos globales</span></h2>
+            <p class="sec-p">Somos partners certificados de las plataformas más reconocidas del mercado, lo que garantiza implementaciones de calidad respaldadas por las mejores prácticas globales.</p>
           </div>
-          <div class="eco-cards">
-
-            <div class="eco-card">
-              <div class="eco-logo gcp-logo">
-                <i class="fab fa-google"></i>
-                <span>Google Cloud</span>
+          <div class="eco-grid">
+            {[
+              { name: 'Google Cloud', cat: 'Partner Premier', color: '#4285f4', icon: 'G', desc: 'Infraestructura cloud, BigQuery, Vertex AI, Google Workspace.' },
+              { name: 'Oracle', cat: 'Gold Partner', color: '#f80000', icon: 'O', desc: 'Oracle ERP Cloud, Oracle Database, OCI Infrastructure.' },
+              { name: 'Odoo', cat: 'Certified Partner', color: '#714B67', icon: '⊞', desc: 'ERP modular para manufactura, retail, servicios y gobierno.' },
+              { name: 'Salesforce', cat: 'Consulting Partner', color: '#00a1e0', icon: 'S', desc: 'CRM, Service Cloud, Marketing Cloud y automatización de ventas.' },
+            ].map((p, i) => (
+              <div class="eco-card reveal" key={i}>
+                <div class="eco-logo-wrap">
+                  <div class="eco-icon" style={`background:${p.color}15; color:${p.color}`}>{p.icon}</div>
+                </div>
+                <div class="eco-info">
+                  <div class="eco-name">{p.name}</div>
+                  <div class="eco-cat">{p.cat}</div>
+                  <p class="eco-desc">{p.desc}</p>
+                </div>
               </div>
-              <div class="eco-badge">Partner Specialist</div>
-              <h3>Google Cloud Platform</h3>
-              <p>Especialistas certificados en la plataforma de Google. Implementamos soluciones de IA, analítica avanzada y migración a la nube con las herramientas más innovadoras del mercado.</p>
-              <div class="eco-chips">
-                <span>Vertex AI</span>
-                <span>Document AI</span>
-                <span>Gemini</span>
-                <span>Agent Builder</span>
-                <span>BigQuery</span>
-              </div>
-            </div>
-
-            <div class="eco-card featured">
-              <div class="eco-logo oracle-logo">
-                <i class="fas fa-database"></i>
-                <span>Oracle</span>
-              </div>
-              <div class="eco-badge gold">Especialistas</div>
-              <h3>Oracle E-Business Suite</h3>
-              <p>Más de 12 años de experiencia en implementación, soporte y desarrollo sobre Oracle EBS. Somos el puente entre los sistemas legados Oracle y las soluciones modernas en la nube.</p>
-              <div class="eco-chips">
-                <span>EBS R11/R12</span>
-                <span>Forms & Reports</span>
-                <span>PL-SQL</span>
-                <span>BI-Publisher</span>
-                <span>Oracle Cloud</span>
-              </div>
-            </div>
-
-            <div class="eco-card">
-              <div class="eco-logo odoo-logo">
-                <i class="fas fa-cubes"></i>
-                <span>Odoo</span>
-              </div>
-              <div class="eco-badge purple">Official Partner</div>
-              <h3>Odoo Enterprise ERP</h3>
-              <p>Partner oficial de Odoo con capacidad de implementar más de 80 módulos. Cubrimos finanzas, RRHH, ventas, CRM, inventario, manufactura y mucho más.</p>
-              <div class="eco-chips">
-                <span>+80 módulos</span>
-                <span>Finanzas</span>
-                <span>RRHH</span>
-                <span>CRM</span>
-                <span>Manufactura</span>
-              </div>
-            </div>
-
-          </div>
-          <div class="eco-also">
-            <p class="ea-label">También trabajamos con</p>
-            <div class="ea-logos">
-              <div class="ea-logo"><i class="fab fa-aws"></i> AWS</div>
-              <div class="ea-logo"><i class="fab fa-microsoft"></i> Azure</div>
-              <div class="ea-logo"><i class="fas fa-server"></i> On-Premise</div>
-              <div class="ea-logo"><i class="fab fa-python"></i> Python</div>
-              <div class="ea-logo"><i class="fab fa-java"></i> Java</div>
-              <div class="ea-logo"><i class="fab fa-react"></i> React</div>
-              <div class="ea-logo"><i class="fas fa-network-wired"></i> APIs REST</div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          CASOS DE ÉXITO
-      ══════════════════════════════════════════ */}
-      <section class="casos" id="casos">
-        <div class="container">
-          <div class="section-header">
-            <div class="section-tag">Casos de éxito</div>
-            <h2 class="section-title">Resultados reales, <span class="gradient-text">impacto medible</span></h2>
-            <p class="section-sub">Proyectos que demuestran cómo la tecnología bien aplicada transforma operaciones completas.</p>
+      {/* ══ CASOS DE ÉXITO ══ */}
+      <section class="section" id="casos">
+        <div class="wrap">
+          <div class="sec-header">
+            <div class="chip">Casos de éxito</div>
+            <h2 class="sec-h2">Proyectos que generaron <span class="text-accent">impacto real</span></h2>
+            <p class="sec-p">Organizaciones públicas y privadas que transformaron sus operaciones con nuestro acompañamiento.</p>
           </div>
-          <div class="casos-list">
-
-            <div class="caso-card">
-              <div class="caso-num">01</div>
-              <div class="caso-icon"><i class="fas fa-file-invoice"></i></div>
-              <div class="caso-content">
-                <div class="caso-tag">Inteligencia Artificial · Finanzas</div>
-                <h3>Conciliación automática de facturas con IA</h3>
-                <p>Cliente con +2,000 proveedores necesitaba validar facturas manualmente. Implementamos Document AI + Gemini para automatizar la extracción y conciliación de datos, conectado directamente al ERP.</p>
-                <div class="caso-results">
-                  <div class="cr-item">
-                    <span class="cr-num">90%</span>
-                    <span class="cr-lbl">Reducción en tiempo de validación</span>
-                  </div>
-                  <div class="cr-item">
-                    <span class="cr-num">70%</span>
-                    <span class="cr-lbl">Menos errores humanos</span>
-                  </div>
-                  <div class="cr-item">
-                    <span class="cr-num">2,000+</span>
-                    <span class="cr-lbl">Proveedores procesados</span>
-                  </div>
+          <div class="cases-grid">
+            {[
+              {
+                sector: 'Sector Público',
+                color: '#0b1e3d',
+                title: 'Modernización de gestión tributaria',
+                desc: 'Implementamos un sistema ERP personalizado con Odoo para digitalizar el proceso de recaudo y gestión de impuestos de un municipio, eliminando procesos manuales y reduciendo tiempos de atención.',
+                results: [
+                  { val: '90%', lbl: 'Reducción en tiempo de trámites' },
+                  { val: '3×', lbl: 'Incremento en recaudo' },
+                  { val: '0', lbl: 'Errores en liquidación' },
+                ],
+                tech: ['Odoo', 'Python', 'PostgreSQL'],
+              },
+              {
+                sector: 'Industria Manufacturera',
+                color: '#1a56db',
+                title: 'Plataforma de trazabilidad con IA',
+                desc: 'Desarrollamos una solución de visión artificial para control de calidad en línea de producción, integrando alertas en tiempo real y reportes analíticos para la gerencia.',
+                results: [
+                  { val: '70%', lbl: 'Reducción de defectos' },
+                  { val: '+40%', lbl: 'Productividad de línea' },
+                  { val: '6 ms', lbl: 'Detección de fallas' },
+                ],
+                tech: ['Google Cloud', 'TensorFlow', 'Python'],
+              },
+              {
+                sector: 'Sector Retail',
+                color: '#0ea5e9',
+                title: 'CRM y automatización de ventas',
+                desc: 'Implementamos Salesforce con automatización de pipelines de ventas, integración con WhatsApp Business y dashboards de seguimiento para una cadena de retail con 15 puntos de venta.',
+                results: [
+                  { val: '+35%', lbl: 'Aumento en conversión' },
+                  { val: '2×', lbl: 'Velocidad del equipo comercial' },
+                  { val: '100%', lbl: 'Visibilidad del pipeline' },
+                ],
+                tech: ['Salesforce', 'WhatsApp API', 'Looker'],
+              },
+            ].map((caso, i) => (
+              <div class="case-card reveal" key={i}>
+                <div class="case-sector" style={`color:${caso.color}`}>{caso.sector}</div>
+                <h3 class="case-title">{caso.title}</h3>
+                <p class="case-desc">{caso.desc}</p>
+                <div class="case-results">
+                  {caso.results.map((r, j) => (
+                    <div class="case-result" key={j}>
+                      <div class="cr-val" style={`color:${caso.color}`}>{r.val}</div>
+                      <div class="cr-lbl">{r.lbl}</div>
+                    </div>
+                  ))}
                 </div>
-                <div class="caso-tech">
-                  <span><i class="fab fa-google"></i> Document AI</span>
-                  <span><i class="fas fa-brain"></i> Gemini</span>
-                  <span><i class="fas fa-link"></i> ERP Integration</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="caso-card reverse">
-              <div class="caso-num">02</div>
-              <div class="caso-icon"><i class="fas fa-university"></i></div>
-              <div class="caso-content">
-                <div class="caso-tag">Machine Learning · Banca</div>
-                <h3>Automatización bancaria con Machine Learning</h3>
-                <p>Para un consorcio de 43 empresas, implementamos un sistema de extracción automática de datos de pagos bancarios y conciliación con Gemini 2.5 PRO, eliminando el trabajo manual diario del equipo financiero.</p>
-                <div class="caso-results">
-                  <div class="cr-item">
-                    <span class="cr-num">43</span>
-                    <span class="cr-lbl">Empresas integradas</span>
-                  </div>
-                  <div class="cr-item">
-                    <span class="cr-num">100%</span>
-                    <span class="cr-lbl">Automatización del proceso</span>
-                  </div>
-                  <div class="cr-item">
-                    <span class="cr-num">0h</span>
-                    <span class="cr-lbl">Trabajo manual diario</span>
-                  </div>
-                </div>
-                <div class="caso-tech">
-                  <span><i class="fas fa-brain"></i> Gemini 2.5 PRO</span>
-                  <span><i class="fab fa-google"></i> Vertex AI</span>
-                  <span><i class="fas fa-university"></i> Banking APIs</span>
+                <div class="case-tech">
+                  {caso.tech.map((t, j) => <span class="tech-tag" key={j}>{t}</span>)}
                 </div>
               </div>
-            </div>
-
-            <div class="caso-card">
-              <div class="caso-num">03</div>
-              <div class="caso-icon"><i class="fas fa-receipt"></i></div>
-              <div class="caso-content">
-                <div class="caso-tag">Cloud · Facturación Electrónica</div>
-                <h3>Plataforma de facturación electrónica en cloud</h3>
-                <p>Desarrollamos e implementamos una plataforma cloud integrada con el Ministerio de Hacienda de El Salvador, iniciando con +200 clientes y con arquitectura lista para escalar a más de 3,000 PYMEs.</p>
-                <div class="caso-results">
-                  <div class="cr-item">
-                    <span class="cr-num">200+</span>
-                    <span class="cr-lbl">Clientes activos</span>
-                  </div>
-                  <div class="cr-item">
-                    <span class="cr-num">3,000+</span>
-                    <span class="cr-lbl">Capacidad de escalamiento</span>
-                  </div>
-                  <div class="cr-item">
-                    <span class="cr-num">99.9%</span>
-                    <span class="cr-lbl">Uptime garantizado</span>
-                  </div>
-                </div>
-                <div class="caso-tech">
-                  <span><i class="fab fa-google"></i> Google Cloud</span>
-                  <span><i class="fas fa-file-invoice-dollar"></i> Hacienda API</span>
-                  <span><i class="fas fa-expand-arrows-alt"></i> Auto-scaling</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="caso-card reverse">
-              <div class="caso-num">04</div>
-              <div class="caso-icon"><i class="fas fa-robot"></i></div>
-              <div class="caso-content">
-                <div class="caso-tag">Agentes IA · Retail &amp; Restaurantes</div>
-                <h3>Agentes agénticos para operaciones de negocio</h3>
-                <p>Desplegamos el framework Consiti Agent Core en restaurantes y retail: automatización completa del flujo de pedidos, gestión de inventario en tiempo real e integración bidireccional con sistemas ERP/CRM sin intervención humana.</p>
-                <div class="caso-results">
-                  <div class="cr-item">
-                    <span class="cr-num">24/7</span>
-                    <span class="cr-lbl">Operación autónoma</span>
-                  </div>
-                  <div class="cr-item">
-                    <span class="cr-num">0</span>
-                    <span class="cr-lbl">Intervención manual</span>
-                  </div>
-                  <div class="cr-item">
-                    <span class="cr-num">3x</span>
-                    <span class="cr-lbl">Velocidad de procesamiento</span>
-                  </div>
-                </div>
-                <div class="caso-tech">
-                  <span><i class="fas fa-brain"></i> Agent Core</span>
-                  <span><i class="fas fa-cubes"></i> Odoo ERP</span>
-                  <span><i class="fas fa-store"></i> Retail/F&amp;B</span>
-                </div>
-              </div>
-            </div>
-
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          METODOLOGÍA
-      ══════════════════════════════════════════ */}
-      <section class="metodologia" id="metodologia">
-        <div class="container">
-          <div class="section-header">
-            <div class="section-tag">Cómo trabajamos</div>
-            <h2 class="section-title">Metodología de <span class="gradient-text">entrega</span></h2>
-            <p class="section-sub">Nos adaptamos al modelo que mejor se ajusta a tus necesidades operativas y presupuestarias.</p>
+      {/* ══ METODOLOGÍA ══ */}
+      <section class="section bg-subtle" id="metodologia">
+        <div class="wrap">
+          <div class="sec-header">
+            <div class="chip">Metodología</div>
+            <h2 class="sec-h2">Un proceso probado para <span class="text-accent">resultados sostenibles</span></h2>
+            <p class="sec-p">No implementamos tecnología por implementarla. Seguimos un proceso estructurado que garantiza adopción y retorno de inversión.</p>
           </div>
-          <div class="met-grid">
-
-            <div class="met-card">
-              <div class="met-number">01</div>
-              <div class="met-icon"><i class="fas fa-key"></i></div>
-              <h3>Proyectos Llave en Mano</h3>
-              <p>Responsabilidad total del proyecto de inicio a fin. Definimos, desarrollamos, probamos y entregamos con garantía de calidad y cumplimiento de plazos.</p>
-              <div class="met-ideal">Ideal para: Implementaciones nuevas, migraciones críticas</div>
-            </div>
-
-            <div class="met-card">
-              <div class="met-number">02</div>
-              <div class="met-icon"><i class="fas fa-handshake"></i></div>
-              <h3>Contratos de Soporte</h3>
-              <p>Banco de horas fijas mensuales para mantenimiento evolutivo, corrección de incidencias y mejoras continuas. Tu equipo siempre tiene respaldo experto.</p>
-              <div class="met-ideal">Ideal para: Post-implementación, sistemas en producción</div>
-            </div>
-
-            <div class="met-card">
-              <div class="met-number">03</div>
-              <div class="met-icon"><i class="fas fa-user-tie"></i></div>
-              <h3>Outsourcing IT</h3>
-              <p>Consultores especializados dedicados que trabajan como parte de tu equipo. Project Managers, DevOps, QA, Data Analysts, UX/UI y más roles disponibles.</p>
-              <div class="met-ideal">Ideal para: Ampliación de equipo, proyectos de largo plazo</div>
-            </div>
-
-            <div class="met-card">
-              <div class="met-number">04</div>
-              <div class="met-icon"><i class="fas fa-clock"></i></div>
-              <h3>Horas de Servicio</h3>
-              <p>Consumo puntual de horas de consultoría técnica especializada según demanda. Flexibilidad total para necesidades específicas sin compromisos a largo plazo.</p>
-              <div class="met-ideal">Ideal para: Consultas técnicas, auditorías, apoyo puntual</div>
-            </div>
-
+          <div class="method-steps">
+            {[
+              { num: '01', title: 'Diagnóstico', desc: 'Entendemos a fondo los procesos, sistemas existentes, puntos de dolor y objetivos del negocio antes de proponer cualquier solución.' },
+              { num: '02', title: 'Diseño de solución', desc: 'Definimos la arquitectura tecnológica, el roadmap de implementación y los KPIs de éxito, alineados con la estrategia organizacional.' },
+              { num: '03', title: 'Implementación ágil', desc: 'Desarrollamos e implementamos en sprints cortos, con entregas parciales que permiten validar y ajustar el rumbo en tiempo real.' },
+              { num: '04', title: 'Capacitación y adopción', desc: 'Formamos a los equipos para garantizar que la tecnología sea usada correctamente y genere el impacto esperado.' },
+              { num: '05', title: 'Soporte continuo', desc: 'Acompañamos a largo plazo con soporte técnico, evolución de las soluciones y optimización continua basada en datos.' },
+            ].map((step, i) => (
+              <div class="method-step reveal" key={i}>
+                <div class="step-num">{step.num}</div>
+                <div class="step-content">
+                  <h3 class="step-title">{step.title}</h3>
+                  <p class="step-desc">{step.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
+      </section>
 
-          <div class="met-team">
-            <h3 class="mt-title">Perfiles especializados disponibles</h3>
-            <div class="mt-roles">
-              <div class="role-pill"><i class="fas fa-project-diagram"></i> Project Manager</div>
-              <div class="role-pill"><i class="fas fa-vial"></i> QA Engineer</div>
-              <div class="role-pill"><i class="fas fa-chart-bar"></i> Business Analyst</div>
-              <div class="role-pill"><i class="fas fa-paint-brush"></i> UX/UI Designer</div>
-              <div class="role-pill"><i class="fas fa-server"></i> DevOps</div>
-              <div class="role-pill"><i class="fab fa-google"></i> CloudOps GCP</div>
-              <div class="role-pill"><i class="fas fa-laptop-code"></i> Frontend Dev</div>
-              <div class="role-pill"><i class="fas fa-code-branch"></i> Backend Dev</div>
-              <div class="role-pill"><i class="fas fa-chart-line"></i> Data Analyst</div>
-              <div class="role-pill"><i class="fas fa-headset"></i> Soporte Técnico</div>
+      {/* ══ NOSOTROS ══ */}
+      <section class="section" id="nosotros">
+        <div class="wrap">
+          <div class="about-layout">
+            <div class="about-text reveal">
+              <div class="chip">Sobre nosotros</div>
+              <h2 class="sec-h2">Más de una década <span class="text-accent">transformando organizaciones</span> en Latinoamérica</h2>
+              <p class="sec-p" style="margin-bottom:24px">
+                Grupo Consiti nació con la convicción de que la tecnología debe ser un habilitador real del negocio, no un fin en sí misma. Desde nuestra fundación, hemos acompañado a más de 200 organizaciones en su camino hacia la modernización digital.
+              </p>
+              <p class="sec-p" style="margin-bottom:32px">
+                Nuestro equipo de consultores, desarrolladores y especialistas en datos trabaja de la mano con cada cliente para entender su contexto único y diseñar soluciones que generan impacto medible y sostenible.
+              </p>
+              <div class="about-values">
+                {[
+                  { icon: '🎯', title: 'Orientación a resultados', desc: 'Medimos el éxito en función del impacto real en el negocio, no en la cantidad de funcionalidades entregadas.' },
+                  { icon: '🤝', title: 'Alianza estratégica', desc: 'Nos convertimos en un socio de largo plazo, no en un proveedor transaccional.' },
+                  { icon: '🔬', title: 'Innovación aplicada', desc: 'Adoptamos tecnologías emergentes con criterio, aplicándolas donde generan valor real.' },
+                ].map((v, i) => (
+                  <div class="about-value" key={i}>
+                    <span class="av-icon">{v.icon}</span>
+                    <div>
+                      <div class="av-title">{v.title}</div>
+                      <div class="av-desc">{v.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div class="about-visual reveal">
+              <div class="about-card-main">
+                <div class="acm-header">
+                  <img src="/static/icon-dark.png" alt="Grupo Consiti" class="acm-logo" />
+                  <div>
+                    <div class="acm-name">Grupo Consiti</div>
+                    <div class="acm-sub">Transformación Digital · LATAM</div>
+                  </div>
+                </div>
+                <div class="acm-stats">
+                  {[
+                    { val: '+200', lbl: 'Proyectos' },
+                    { val: '8', lbl: 'Países' },
+                    { val: '+12', lbl: 'Años' },
+                    { val: '97%', lbl: 'Satisfacción' },
+                  ].map((s, i) => (
+                    <div class="acm-stat" key={i}>
+                      <div class="acm-val">{s.val}</div>
+                      <div class="acm-lbl">{s.lbl}</div>
+                    </div>
+                  ))}
+                </div>
+                <div class="acm-tags">
+                  {['Software', 'IA', 'Cloud', 'ERP', 'CRM', 'Data Analytics'].map((t, i) => (
+                    <span class="acm-tag" key={i}>{t}</span>
+                  ))}
+                </div>
+              </div>
+              <div class="about-card-mini">
+                <div class="acmi-icon">🌎</div>
+                <div class="acmi-text">Presencia en<br/><strong>Colombia, México, Ecuador,<br/>Perú, Chile y más</strong></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          CLIENTES / CONFIANZA
-      ══════════════════════════════════════════ */}
-      <section class="clientes">
-        <div class="container">
-          <p class="cli-label">Organizaciones que confían en Grupo Consiti</p>
-          <div class="cli-logos">
-            <div class="cli-logo"><i class="fas fa-university"></i> Banco Hipotecario</div>
-            <div class="cli-logo"><i class="fas fa-hand-holding-usd"></i> Credisiman</div>
-            <div class="cli-logo"><i class="fas fa-building"></i> Sector Público</div>
-            <div class="cli-logo"><i class="fas fa-store"></i> Retail LATAM</div>
-            <div class="cli-logo"><i class="fas fa-utensils"></i> F&amp;B Chains</div>
-            <div class="cli-logo"><i class="fas fa-industry"></i> Manufactura</div>
+      {/* ══ TESTIMNIOS ══ */}
+      <section class="section bg-subtle">
+        <div class="wrap">
+          <div class="sec-header">
+            <div class="chip">Clientes</div>
+            <h2 class="sec-h2">Lo que dicen <span class="text-accent">nuestros clientes</span></h2>
+          </div>
+          <div class="testimonials-grid">
+            {[
+              {
+                quote: 'Grupo Consiti transformó completamente nuestra operación de recaudo. Lo que antes nos tomaba días, ahora se hace en horas con cero errores. El equipo fue excepcional en todo el proceso.',
+                name: 'Carlos Mendoza',
+                role: 'Secretario de Hacienda',
+                org: 'Municipio de Bucaramanga',
+                avatar: 'CM',
+                color: '#0b1e3d',
+              },
+              {
+                quote: 'La implementación de IA en nuestra línea de producción superó todas las expectativas. Redujimos defectos en un 70% y hoy tenemos visibilidad completa de la operación en tiempo real.',
+                name: 'Laura Ríos',
+                role: 'Directora de Operaciones',
+                org: 'Industrias LATAM S.A.',
+                avatar: 'LR',
+                color: '#1a56db',
+              },
+              {
+                quote: 'Con Salesforce implementado por Consiti, nuestro equipo de ventas duplicó su productividad. El acompañamiento post-implementación hizo la diferencia para lograr una adopción del 100%.',
+                name: 'Andrés Martínez',
+                role: 'Gerente Comercial',
+                org: 'Cadena Retail Nacional',
+                avatar: 'AM',
+                color: '#0ea5e9',
+              },
+            ].map((t, i) => (
+              <div class="testimonial-card reveal" key={i}>
+                <div class="t-stars">★★★★★</div>
+                <p class="t-quote">"{t.quote}"</p>
+                <div class="t-author">
+                  <div class="t-avatar" style={`background:${t.color}`}>{t.avatar}</div>
+                  <div>
+                    <div class="t-name">{t.name}</div>
+                    <div class="t-role">{t.role} · {t.org}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          CTA CONTACTO
-      ══════════════════════════════════════════ */}
-      <section class="contacto" id="contacto">
-        <div class="container">
-          <div class="cta-inner">
-            <div class="cta-text">
-              <div class="section-tag light">¿Listo para transformar tu organización?</div>
-              <h2>Hablemos de tu <span class="gradient-text-light">próximo proyecto</span></h2>
-              <p>Nuestro equipo de consultores está disponible para analizar tu situación actual y diseñar una hoja de ruta tecnológica adaptada a tus objetivos.</p>
-              <div class="cta-contact-info">
-                <div class="cci-item">
-                  <i class="fas fa-envelope"></i>
-                  <span>contacto@grupoconsiti.com</span>
-                </div>
-                <div class="cci-item">
-                  <i class="fas fa-globe"></i>
-                  <span>www.grupoconsiti.com</span>
-                </div>
-                <div class="cci-item">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>Latinoamérica · +12 países</span>
-                </div>
-              </div>
-              <div class="cta-certifs">
-                <div class="cert-badge"><i class="fab fa-google"></i> Google Cloud Partner</div>
-                <div class="cert-badge"><i class="fas fa-database"></i> Oracle Specialist</div>
-                <div class="cert-badge"><i class="fas fa-cubes"></i> Odoo Partner</div>
+      {/* ══ CONTACTO / CTA ══ */}
+      <section class="section cta-section" id="contacto">
+        <div class="wrap">
+          <div class="cta-layout">
+            <div class="cta-text reveal">
+              <div class="chip chip-white">Comencemos</div>
+              <h2 class="sec-h2 white">¿Listo para transformar su organización?</h2>
+              <p class="sec-p light">
+                Cuéntenos su desafío. Nuestro equipo de expertos le diseñará una hoja de ruta personalizada para su proceso de transformación digital.
+              </p>
+              <div class="cta-items">
+                {[
+                  { icon: '⚡', text: 'Respuesta en menos de 24 horas' },
+                  { icon: '🔒', text: 'Consulta inicial sin costo' },
+                  { icon: '🎯', text: 'Propuesta personalizada a su contexto' },
+                ].map((item, i) => (
+                  <div class="cta-item" key={i}>
+                    <span class="ci-icon">{item.icon}</span>
+                    <span class="ci-text">{item.text}</span>
+                  </div>
+                ))}
               </div>
             </div>
-            <div class="cta-form-wrap">
-              <div class="cta-form">
-                <h3>Solicita una consultoría gratuita</h3>
-                <p class="cf-sub">Respuesta garantizada en menos de 24 horas hábiles.</p>
+            <div class="cta-form-wrap reveal">
+              <form class="contact-form" id="contactForm">
+                <h3 class="form-title">Solicite una consulta gratuita</h3>
                 <div class="form-row">
-                  <div class="fg">
-                    <label>Nombre completo</label>
-                    <input type="text" placeholder="Tu nombre" id="f-nombre" />
+                  <div class="form-group">
+                    <label class="form-label">Nombre completo</label>
+                    <input type="text" class="form-input" placeholder="Ej: Juan García" name="nombre" required />
                   </div>
-                  <div class="fg">
-                    <label>Empresa</label>
-                    <input type="text" placeholder="Tu empresa" id="f-empresa" />
+                  <div class="form-group">
+                    <label class="form-label">Empresa</label>
+                    <input type="text" class="form-input" placeholder="Nombre de su organización" name="empresa" required />
                   </div>
                 </div>
-                <div class="fg">
-                  <label>Correo electrónico</label>
-                  <input type="email" placeholder="tu@empresa.com" id="f-email" />
+                <div class="form-group">
+                  <label class="form-label">Correo electrónico</label>
+                  <input type="email" class="form-input" placeholder="correo@empresa.com" name="email" required />
                 </div>
-                <div class="fg">
-                  <label>¿En qué podemos ayudarte?</label>
-                  <select id="f-servicio">
-                    <option value="">Selecciona un área de interés</option>
-                    <option>Inteligencia Artificial (Consiti Agent Core)</option>
-                    <option>Google Cloud Platform</option>
-                    <option>Oracle E-Business Suite</option>
-                    <option>Implementación Odoo ERP</option>
-                    <option>Desarrollo Full Stack</option>
-                    <option>Facturación Electrónica</option>
-                    <option>Outsourcing IT</option>
+                <div class="form-group">
+                  <label class="form-label">Teléfono / WhatsApp</label>
+                  <input type="tel" class="form-input" placeholder="+57 300 000 0000" name="telefono" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">¿Cuál es su principal desafío?</label>
+                  <select class="form-input form-select" name="desafio">
+                    <option value="">Seleccione una opción</option>
+                    <option>Automatización de procesos</option>
+                    <option>Implementación ERP/CRM</option>
+                    <option>Migración a la nube</option>
+                    <option>Inteligencia Artificial / Data</option>
+                    <option>Integración de sistemas</option>
                     <option>Otro</option>
                   </select>
                 </div>
-                <div class="fg">
-                  <label>Mensaje (opcional)</label>
-                  <textarea placeholder="Cuéntanos brevemente tu desafío..." rows={3} id="f-mensaje"></textarea>
+                <div class="form-group">
+                  <label class="form-label">Mensaje (opcional)</label>
+                  <textarea class="form-input form-textarea" placeholder="Cuéntenos más sobre su proyecto o necesidad..." name="mensaje" rows={3}></textarea>
                 </div>
-                <button class="btn btn-primary btn-block" id="submitBtn">
-                  <i class="fas fa-paper-plane"></i> Enviar solicitud
+                <button type="submit" class="btn-form-submit">
+                  Enviar solicitud
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M3.75 9h10.5M9 3.75L14.25 9 9 14.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </button>
-                <p class="form-legal">Al enviar, aceptas nuestra <a href="#footer">Política de Privacidad</a>. Tus datos son tratados con confidencialidad.</p>
-              </div>
+                <p class="form-disclaimer">Al enviar este formulario, acepta nuestra <a href="#privacidad">política de privacidad</a>.</p>
+              </form>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════
-          FOOTER
-      ══════════════════════════════════════════ */}
-      <footer class="footer" id="footer">
-        <div class="container">
+      {/* ══ FOOTER ══ */}
+      <footer class="footer">
+        <div class="wrap">
           <div class="footer-top">
-            <div class="ft-brand">
-              <a href="/" class="logo footer-logo">
-                <div class="logo-mark"><span class="lm-c">C</span></div>
-                <div class="logo-words">
-                  <span class="lw-grupo white">Grupo</span>
-                  <span class="lw-consiti white">Consiti</span>
-                </div>
-              </a>
-              <p class="ft-tagline">"Transformación digital con Software, IA y Cloud"</p>
-              <p class="ft-desc">Socio estratégico para la modernización tecnológica de organizaciones públicas y privadas en Latinoamérica.</p>
-              <div class="ft-social">
-                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="Twitter/X"><i class="fab fa-x-twitter"></i></a>
-                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <div class="footer-brand">
+              <img src="/static/logo-dark.png" alt="Grupo Consiti" class="footer-logo" />
+              <p class="footer-tagline">
+                Transformación digital con Software,<br />Inteligencia Artificial y Cloud en Latinoamérica.
+              </p>
+              <div class="footer-social">
+                <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link" aria-label="Twitter">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
               </div>
             </div>
-            <div class="ft-links">
-              <div class="ftl-col">
-                <h4>Servicios</h4>
-                <ul>
-                  <li><a href="#servicios">Consiti Agent Core</a></li>
-                  <li><a href="#servicios">Google Cloud</a></li>
-                  <li><a href="#servicios">Oracle EBS</a></li>
-                  <li><a href="#servicios">Odoo ERP</a></li>
-                  <li><a href="#servicios">Desarrollo Full Stack</a></li>
-                  <li><a href="#servicios">Facturación Electrónica</a></li>
+            <div class="footer-cols">
+              <div class="footer-col">
+                <div class="footer-col-title">Servicios</div>
+                <ul class="footer-links">
+                  <li><a href="#servicios">Desarrollo de Software</a></li>
+                  <li><a href="#servicios">Inteligencia Artificial</a></li>
+                  <li><a href="#servicios">Cloud & Infraestructura</a></li>
+                  <li><a href="#servicios">Implementación ERP</a></li>
+                  <li><a href="#servicios">Analítica & BI</a></li>
                 </ul>
               </div>
-              <div class="ftl-col">
-                <h4>Empresa</h4>
-                <ul>
-                  <li><a href="#sobre">Sobre nosotros</a></li>
-                  <li><a href="#ecosistema">Nuestros partners</a></li>
+              <div class="footer-col">
+                <div class="footer-col-title">Empresa</div>
+                <ul class="footer-links">
+                  <li><a href="#nosotros">Sobre nosotros</a></li>
                   <li><a href="#casos">Casos de éxito</a></li>
                   <li><a href="#metodologia">Metodología</a></li>
-                  <li><a href="#">Blog técnico</a></li>
+                  <li><a href="#contacto">Trabaja con nosotros</a></li>
+                  <li><a href="#contacto">Blog</a></li>
                 </ul>
               </div>
-              <div class="ftl-col">
-                <h4>Contacto</h4>
-                <ul>
-                  <li><a href="mailto:contacto@grupoconsiti.com"><i class="fas fa-envelope"></i> contacto@grupoconsiti.com</a></li>
-                  <li><a href="#"><i class="fas fa-globe"></i> www.grupoconsiti.com</a></li>
-                  <li><a href="#"><i class="fas fa-map-marker-alt"></i> Latinoamérica</a></li>
-                  <li><a href="#contacto"><i class="fas fa-headset"></i> Soporte técnico</a></li>
+              <div class="footer-col">
+                <div class="footer-col-title">Contacto</div>
+                <ul class="footer-links">
+                  <li><a href="mailto:info@consiti.co">info@consiti.co</a></li>
+                  <li><a href="tel:+573000000000">+57 300 000 0000</a></li>
+                  <li><a href="#contacto">Bogotá, Colombia</a></li>
+                  <li><a href="#contacto">Solicitar demo</a></li>
                 </ul>
               </div>
             </div>
           </div>
           <div class="footer-bottom">
-            <p class="fb-copy">© 2025 Grupo Consiti. Todos los derechos reservados.</p>
-            <div class="fb-legal">
-              <a href="#">Política de Privacidad</a>
-              <a href="#">Términos de Servicio</a>
-              <a href="#">Cookies</a>
+            <div class="footer-legal">
+              <span>© 2025 Grupo Consiti. Todos los derechos reservados.</span>
+              <a href="#privacidad" id="privacidad">Política de privacidad</a>
+              <a href="#terminos">Términos de uso</a>
             </div>
           </div>
         </div>
       </footer>
 
+      {/* ══ SCRIPTS ══ */}
       <script dangerouslySetInnerHTML={{ __html: `
-        /* ── Nav burger ── */
-        const burger = document.getElementById('navBurger');
-        const navLinks = document.getElementById('navLinks');
-        burger.addEventListener('click', () => navLinks.classList.toggle('open'));
-
-        /* ── Scroll effect ── */
+        // Navbar scroll
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-          navbar.classList.toggle('scrolled', window.scrollY > 30);
-        }, { passive: true });
+          navbar.classList.toggle('scrolled', window.scrollY > 40);
+        });
 
-        /* ── Smooth scroll ── */
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-          a.addEventListener('click', e => {
-            const t = document.querySelector(a.getAttribute('href'));
-            if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); navLinks.classList.remove('open'); }
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); observer.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        reveals.forEach(el => observer.observe(el));
+
+        // Mobile menu
+        const burger = document.getElementById('navBurger');
+        const navLinks = document.getElementById('navLinks');
+        burger.addEventListener('click', () => {
+          navLinks.classList.toggle('open');
+          burger.classList.toggle('active');
+        });
+        navLinks.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', () => { navLinks.classList.remove('open'); burger.classList.remove('active'); });
+        });
+
+        // Bar animations
+        document.querySelectorAll('.bar').forEach((bar, i) => {
+          setTimeout(() => { bar.style.height = bar.style.height || '70%'; }, 400 + i * 80);
+        });
+
+        // Form submit
+        const form = document.getElementById('contactForm');
+        if (form) {
+          form.addEventListener('submit', e => {
+            e.preventDefault();
+            const btn = form.querySelector('.btn-form-submit');
+            btn.textContent = '✓ Solicitud enviada';
+            btn.style.background = '#059669';
+            btn.disabled = true;
           });
-        });
-
-        /* ── Intersection animations ── */
-        const io = new IntersectionObserver(entries => {
-          entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); } });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        document.querySelectorAll('.svc-card, .eco-card, .caso-card, .met-card, .stat-item, .ap-item').forEach(el => {
-          el.classList.add('reveal'); io.observe(el);
-        });
-
-        /* ── Counter animation ── */
-        function animateCount(el, target, suffix) {
-          let start = 0;
-          const step = () => {
-            start += Math.ceil(target / 60);
-            if (start >= target) { el.textContent = '+' + target + suffix; return; }
-            el.textContent = '+' + start + suffix;
-            requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
         }
-        const statsObs = new IntersectionObserver(entries => {
-          entries.forEach(en => {
-            if (en.isIntersecting) {
-              statsObs.unobserve(en.target);
-              const nums = en.target.querySelectorAll('.stat-num');
-              const targets = [12, 150, 300, 500, 10];
-              nums.forEach((n, i) => animateCount(n, targets[i], ''));
-            }
-          });
-        }, { threshold: 0.5 });
-        const statsBar = document.querySelector('.stats-bar');
-        if (statsBar) statsObs.observe(statsBar);
-
-        /* ── Form submit ── */
-        document.getElementById('submitBtn').addEventListener('click', function() {
-          const fields = ['f-nombre','f-empresa','f-email','f-servicio'];
-          const empty = fields.some(id => !document.getElementById(id).value.trim());
-          if (!empty) {
-            this.innerHTML = '<i class="fas fa-check-circle"></i> ¡Solicitud enviada! Te contactamos pronto.';
-            this.style.background = 'linear-gradient(135deg, #059669, #047857)';
-            this.disabled = true;
-          } else {
-            this.innerHTML = '<i class="fas fa-exclamation-circle"></i> Completa todos los campos requeridos';
-            this.style.background = 'linear-gradient(135deg,#dc2626,#b91c1c)';
-            setTimeout(() => {
-              this.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar solicitud';
-              this.style.background = '';
-              this.disabled = false;
-            }, 2500);
-          }
-        });
       ` }} />
     </>
   )
